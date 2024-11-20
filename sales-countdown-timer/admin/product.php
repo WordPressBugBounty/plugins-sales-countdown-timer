@@ -27,6 +27,9 @@ class SALES_COUNTDOWN_TIMER_Admin_Product {
 				$this,
 				'woocommerce_process_product_meta_simple',
 			) );
+
+			add_action( 'woocommerce_process_product_meta_easy_product_bundle', array( $this, 'woocommerce_process_product_meta_simple' ) );
+
 			add_action( 'woocommerce_save_product_variation', array(
 				$this,
 				'woocommerce_save_product_variation'

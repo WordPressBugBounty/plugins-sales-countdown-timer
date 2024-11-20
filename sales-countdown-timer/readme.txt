@@ -3,9 +3,9 @@ Contributors: villatheme, mrt3vn
 Donate link: https://www.villatheme.com/donate
 Tags: checkout countdown for woocommerce, product time countdown for woocommerce, woocommerce, woocommerce countdown timer, woocommerce sales countdown
 Requires at least: 5.0
-Tested up to: 6.5
+Tested up to: 6.7
 WC requires at least: 7.0
-WC tested up to: 8.9
+WC tested up to: 9.4
 Requires PHP: 7.0
 Stable tag: trunk
 License: GPL v2 or later
@@ -226,6 +226,9 @@ All features from the free version.
 2. Countdown timer with progress bar on WooCommerce single products, category page and shop page settings
 
 == Changelog ==
+/**1.1.3 - 2024.09.30**/
+- Fixed: Issue with Product Bundle Builder for WooCommerce
+
 /**1.1.2 - 2024.06.13**/
 - Updated: Compatible with WordPress 6.5
 
