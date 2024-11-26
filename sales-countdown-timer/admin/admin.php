@@ -200,6 +200,55 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                     <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
+                                    <p class="description">
+		                                <?php esc_html_e( 'Auto change after time and decrease discount amount of Custom change with multi level.',
+			                                'sales-countdown-timer' ) ?>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label for="woo-stcr-checkout-countdown-change"><?php esc_html_e( 'Change discount every',
+											'sales-countdown-timer' ) ?></label>
+                                </th>
+                                <td>
+                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                    </a>
+                                    <p class="description">
+		                                <?php esc_html_e( 'Set Auto change after time (second or minute)',
+			                                'sales-countdown-timer' ) ?>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label for="woo-stcr-checkout-countdown-change"><?php esc_html_e( 'Decrease discount amount',
+											'sales-countdown-timer' ) ?></label>
+                                </th>
+                                <td>
+                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                    </a>
+                                    <p class="description">
+		                                <?php esc_html_e( 'Set Auto change Decrease discount amount (Percentage)',
+			                                'sales-countdown-timer' ) ?>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label for="woo-stcr-checkout-countdown-change"><?php esc_html_e( 'Custom level',
+											'sales-countdown-timer' ) ?></label>
+                                </th>
+                                <td>
+                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                    </a>
+                                    <p class="description">
+		                                <?php esc_html_e( 'Custom level table with multi-level. Each level has settings for time, amount, message...',
+			                                'sales-countdown-timer' ) ?>
+                                    </p>
                                 </td>
                             </tr>
                             </tbody>
@@ -444,6 +493,21 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                     <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label for="woo-stcr-checkout-countdown-id-on-checkout-page"><?php esc_html_e( 'Action after finish countdown',
+											'sales-countdown-timer' ) ?></label>
+                                </th>
+                                <td>
+                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                    </a>
+                                    <p class="description">
+		                                <?php esc_html_e( 'Refresh page or Refresh order review',
+			                                'sales-countdown-timer' ) ?>
+                                    </p>
                                 </td>
                             </tr>
                             </tbody>
@@ -828,6 +892,56 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 											esc_attr_e( 'woo-sctr-hidden-class' );
 										} ?>"><?php esc_html_e( 'The countdown timer will not show if message does not include {countdown_timer}', 'sales-countdown-timer' ) ?></p>
                                     </div>
+                                    <div class="field">
+                                        <label><?php esc_html_e( 'Shortcode upcoming message', 'sales-countdown-timer' ) ?></label>
+                                        <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+		                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                        </a>
+                                    </div>
+                                    <div class="field">
+                                        <label><?php esc_html_e( 'Shortcode time elapsed message', 'sales-countdown-timer' ) ?></label>
+                                        <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+		                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                        </a>
+                                    </div>
+                                    <div class="field">
+                                        <label><?php esc_html_e( 'Reduce the size of countdown timer on:', 'sales-countdown-timer' ) ?></label>
+                                        <div class="equal width fields">
+                                            <div class="inline field">
+                                                <label><?php esc_html_e( 'Product list', 'sales-countdown-timer' ) ?></label>
+                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+				                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                                </a>
+                                            </div>
+                                            <div class="inline field">
+                                                <label><?php esc_html_e( 'Mobile', 'sales-countdown-timer' ) ?></label>
+                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+				                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                                </a>
+                                            </div>
+                                            <div class="inline field">
+                                                <label><?php esc_html_e( 'Sticky', 'sales-countdown-timer' ) ?></label>
+                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+				                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="equal width fields">
+                                        <div class="field">
+                                            <label><?php esc_html_e( 'Message position', 'sales-countdown-timer' ) ?></label>
+                                            <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+				                                <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                            </a>
+                                        </div>
+                                        <div class="field">
+                                            <label><?php esc_html_e( 'Time units', 'sales-countdown-timer' ) ?></label>
+                                            <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+				                                <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                            </a>
+                                        </div>
+                                    </div>
+
                                     <div class="equal width fields">
                                         <div class="field">
                                             <label><?php esc_html_e( 'Time separator', 'sales-countdown-timer' ) ?></label>
@@ -847,6 +961,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                                 <option value="2" <?php selected( $this->settings->get_count_style()[ $i ], 2 ); ?>><?php esc_html_e( '01 days 02 hours 03 minutes 04 seconds', 'sales-countdown-timer' ) ?></option>
                                                 <option value="3" <?php selected( $this->settings->get_count_style()[ $i ], 3 ); ?>><?php esc_html_e( '01:02:03:04', 'sales-countdown-timer' ) ?></option>
                                                 <option value="4" <?php selected( $this->settings->get_count_style()[ $i ], 4 ); ?>><?php esc_html_e( '01d:02h:03m:04s', 'sales-countdown-timer' ) ?></option>
+                                                <option disabled><?php esc_html_e( 'Custom (Premium)', 'sales-countdown-timer' ) ?></option>
                                             </select>
                                         </div>
                                     </div>
@@ -869,6 +984,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                                     class="woo-sctr-animation-style vi-ui dropdown">
                                                 <option value="default" <?php selected( $animation_style, 'default' ); ?>><?php esc_html_e( 'Default', 'sales-countdown-timer' ) ?></option>
                                                 <option value="slide" <?php selected( $animation_style, 'slide' ); ?>><?php esc_html_e( 'Slide', 'sales-countdown-timer' ) ?></option>
+                                                <option disabled><?php esc_html_e( '3D Flip (Premium)', 'sales-countdown-timer' ) ?></option>
                                             </select>
                                         </div>
                                     </div>

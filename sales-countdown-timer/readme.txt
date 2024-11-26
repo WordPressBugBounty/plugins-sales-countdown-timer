@@ -226,6 +226,9 @@ All features from the free version.
 2. Countdown timer with progress bar on WooCommerce single products, category page and shop page settings
 
 == Changelog ==
+/**1.1.4 - 2024.11.26**/
+– Updated: Add setting descriptions
+
 /**1.1.3 - 2024.09.30**/
 - Fixed: Issue with Product Bundle Builder for WooCommerce
 
