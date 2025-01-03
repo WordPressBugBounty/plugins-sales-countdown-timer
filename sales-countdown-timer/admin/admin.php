@@ -815,13 +815,13 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                                                class="woo-sctr-sale-from-date woo-sctr-sale-date <?php if ( $this->settings->get_time_type()[ $i ] == 'loop' ) {
 															       echo 'woo-sctr-hide-date';
 														       } ?>"
-                                                               value="<?php echo esc_url( $this->settings->get_sale_from_date()[ $i ] ) ?>">
+                                                               value="<?php echo $this->settings->get_sale_from_date()[ $i ] ? esc_attr( $this->settings->get_sale_from_date()[ $i ] ) : '' ?>">
                                                     </div>
                                                     <div class="field">
                                                         <input type="time"
                                                                name="woo_ctr_sale_from_time[]"
                                                                class="woo-sctr-sale-from-time"
-                                                               value="<?php echo $this->settings->get_sale_from_time()[ $i ] ? esc_attr( $this->settings->get_sale_from_time()[ $i ] ) : '00:00' ?>">
+                                                               value="<?php echo $this->settings->get_sale_from_time()[ $i ] ? esc_attr( $this->settings->get_sale_from_time()[ $i ] ) : '' ?>">
                                                     </div>
                                                 </div>
                                             </div>
@@ -833,12 +833,12 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                                                class="woo-sctr-sale-to-date woo-sctr-sale-date <?php if ( $this->settings->get_time_type()[ $i ] == 'loop' ) {
 															       echo 'woo-sctr-hide-date';
 														       } ?>"
-                                                               value="<?php echo esc_attr( $this->settings->get_sale_to_date()[ $i ] ) ?>">
+                                                               value="<?php echo $this->settings->get_sale_to_date()[ $i ] ? esc_attr( $this->settings->get_sale_to_date()[ $i ] ) : '' ?>">
                                                     </div>
                                                     <div class="field">
                                                         <input type="time" name="woo_ctr_sale_to_time[]"
                                                                class="woo-sctr-sale-to-time"
-                                                               value="<?php echo $this->settings->get_sale_to_time()[ $i ] ? esc_attr( $this->settings->get_sale_to_time()[ $i ] ) : '00:00' ?>">
+                                                               value="<?php echo $this->settings->get_sale_to_time()[ $i ] ? esc_attr( $this->settings->get_sale_to_time()[ $i ] ) : '' ?>">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1208,6 +1208,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                                     <div class="three wide field">
                                                     </div>
                                                 </div>
+                                                <p><?php esc_html_e( '(*)Countdown timer items Border radius, Height, Width... are not applied to this type.', 'sales-countdown-timer' ) ?></p>
                                             </div>
                                         </div>
                                         <div class="field">
@@ -1309,7 +1310,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                                            class="woo-sctr-circle-smooth-animation-check"
                                                            value="1" <?php checked( $smooth_animation, '1' ) ?>><label><?php esc_html_e( 'Use smooth animation for circle', 'sales-countdown-timer' ) ?></label>
                                                 </div>
-                                                <p><?php esc_html_e( '(*)Countdown timer items Border radius, Height and Width are not applied to this type.', 'sales-countdown-timer' ) ?></p>
+                                                <p><?php esc_html_e( '(*)Countdown timer items Border radius, Height, Width... are not applied to this type.', 'sales-countdown-timer' ) ?></p>
                                             </div>
                                         </div>
                                     </div>

@@ -1,3 +1,8 @@
+/**1.1.5 - 2025.01.03**/
+- Fixed: Issue when saving shortcode date time
+- Fixed: Issue when process progress bar quantity
+- Fixed: Issue when reduce size of timer on shop page, mobile
+
 /**1.1.4 - 2024.11.26**/
 – Updated: Add setting descriptions
 

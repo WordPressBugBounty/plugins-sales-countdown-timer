@@ -274,6 +274,9 @@ class SALES_COUNTDOWN_TIMER_Frontend_Single_Product {
 
 	public function get_progress_bar_html( $product_id, $index, $progress_bar_real_quantity, $progress_bar_message, $progress_bar_type ) {
 		$wc_product                 = wc_get_product( $product_id );
+		if ( ! $wc_product->is_on_sale() ) {
+		    return '';
+        }
 		$progress_bar               = $wc_product->get_meta( '_woo_ctr_enable_progress_bar', true );
 		$progress_bar_goal          = (int) $wc_product->get_meta( '_woo_ctr_progress_bar_goal', true );
 		$progress_bar_initial       = (int) $wc_product->get_meta( '_woo_ctr_progress_bar_initial', true );
@@ -349,8 +352,8 @@ class SALES_COUNTDOWN_TIMER_Frontend_Single_Product {
 		}
 		if ( is_array( $data ) && count( $data ) && is_array( $order_status ) && count( $order_status ) ) {
 			foreach ( $data as $key => $value ) {
-				$order = get_post( $value['id'] );
-				if ( $order && in_array( $order->post_status, $order_status ) ) {
+				$order = wc_get_order( intval( $value['id'] ) );
+				if ( $order && in_array( 'wc-' . $order->get_status(), $order_status ) ) {
 					$progress_bar_real_quantity += $value['quantity'];
 				}
 			}

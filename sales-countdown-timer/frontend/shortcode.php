@@ -267,6 +267,16 @@ class SALES_COUNTDOWN_TIMER_Frontend_Shortcode {
 			if ( $countdown_timer_item_border_color ) {
 				$css1 .= esc_attr__( 'border:1px solid ' ) . $countdown_timer_item_border_color . ';';
 			}
+			//shop resize
+            if ( $datetime_value_font_size ) {
+	            $css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-value,.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-value-container{';
+	            $css .= esc_attr__( 'font-size: ' ) . $datetime_value_font_size . 'px;';
+	            $css .= '}';
+            }
+            if ( $datetime_unit_font_size ) {
+	            $css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-text{' . esc_attr__( 'font-size:' ) . $datetime_unit_font_size . 'px;}';
+            }
+
 			/*mobile*/
 			$mobile_css = '@media screen and (max-width:600px){';
 			if ( $countdown_timer_padding_mobile !== '' ) {
