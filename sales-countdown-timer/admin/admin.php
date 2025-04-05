@@ -1658,6 +1658,26 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                         </div>
                                         <div class="equal width fields">
                                             <div class="field">
+                                                <label><?php esc_html_e( 'Progress position on shop page', 'sales-countdown-timer' ) ?></label>
+                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+		                                            <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                                </a>
+                                            </div>
+                                            <div class="field">
+                                                <label><?php esc_html_e( 'Progress position on single product page', 'sales-countdown-timer' ) ?></label>
+                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+		                                            <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                                </a>
+                                            </div>
+                                            <div class="field">
+                                                <label><?php esc_html_e( 'Progress bar preview', 'sales-countdown-timer' ) ?></label>
+                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+		                                            <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="equal width fields">
+                                            <div class="field">
                                                 <label><?php esc_html_e( 'Position', 'sales-countdown-timer' ) ?></label>
                                                 <select name="woo_ctr_progress_bar_position[]"
                                                         class="woo-sctr-progress-bar-position vi-ui dropdown">
@@ -1703,6 +1723,40 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                                        name="woo_ctr_progress_bar_border_radius[]"
                                                        class="woo-sctr-progress-bar-border-radius"
                                                        value="<?php echo esc_attr( $this->settings->get_progress_bar_border_radius()[ $i ] ); ?>">
+                                            </div>
+                                        </div>
+                                        <div class="equal width fields">
+                                            <div class="field">
+                                                <label><?php esc_html_e( 'Message color', 'sales-countdown-timer' ) ?></label>
+                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+				                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                                </a>
+                                            </div>
+                                            <div class="field">
+                                                <label><?php esc_html_e( 'Font size', 'sales-countdown-timer' ) ?></label>
+                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+				                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="equal width fields">
+                                            <div class="field">
+                                                <label><?php esc_html_e( 'Border style', 'sales-countdown-timer' ) ?></label>
+                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+				                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                                </a>
+                                            </div>
+                                            <div class="field">
+                                                <label><?php esc_html_e( 'Border width', 'sales-countdown-timer' ) ?></label>
+                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+				                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                                </a>
+                                            </div>
+                                            <div class="field">
+                                                <label><?php esc_html_e( 'Border color', 'sales-countdown-timer' ) ?></label>
+                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+				                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
