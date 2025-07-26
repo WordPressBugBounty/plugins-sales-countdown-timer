@@ -3,9 +3,9 @@ Contributors: villatheme, mrt3vn
 Donate link: https://www.villatheme.com/donate
 Tags: checkout countdown for woocommerce, product time countdown for woocommerce, woocommerce, woocommerce countdown timer, woocommerce sales countdown
 Requires at least: 5.0
-Tested up to: 6.7
+Tested up to: 6.8
 WC requires at least: 7.0
-WC tested up to: 9.7
+WC tested up to: 10.0
 Requires PHP: 7.0
 Stable tag: trunk
 License: GPL v2 or later
@@ -21,7 +21,7 @@ Sales Countdown Timer is a plugin that allows shop owners to boost the Sales in 
 
 >[Try the Demo](http://new2new.com/?item=sales-countdown-timer "Demo Sales Countdown Timer") |[Documents](http://docs.villatheme.com/?item=sales-countdown-timer "Documents") |[Pro Version](https://1.envato.market/962d3 "Pro Version") | [Facebook group](https://www.facebook.com/groups/villatheme "VillaTheme")
 
-[youtube https://youtu.be/r_L4SEot3Kg]
+[youtube https://youtu.be/vS4IOqdtSbw]
 
 ### FEATURES
 
@@ -112,6 +112,8 @@ All features from the free version.
 &#9658; [GET PREMIUM VERSION NOW](https://1.envato.market/962d3)
 
 ### MAY BE YOU NEED
+
+[VARGAL - Additional Variation Gallery for Woo](https://wordpress.org/plugins/vargal-additional-variation-gallery-for-woo)
 
 [AFFI – Affiliate Marketing for WooCommerce](https://wordpress.org/plugins/affi-affiliate-marketing-for-woo)
 
@@ -240,10 +242,16 @@ All features from the free version.
 == Frequently Asked Questions ==
 
 == Screenshots ==
-1. Countdown timer designs
-2. Countdown timer with progress bar on WooCommerce single products, category page and shop page settings
+1. Sale countdown timer on cart page
+2. Sale countdown timer on product list
+3. Sale countdown timer on single product page
 
 == Changelog ==
+/**1.1.7 - 2025.07.26**/
+– Updated: Add setting descriptions
+– Updated: Minify some source code
+– Fixed: JS error when declaring a variable
+
 /**1.1.6 - 2025.04.05**/
 – Updated: Add setting descriptions
 

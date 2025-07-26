@@ -1,3 +1,8 @@
+/**1.1.7 - 2025.07.26**/
+– Updated: Add setting descriptions
+– Updated: Minify some source code
+– Fixed: JS error when declaring a variable
+
 /**1.1.6 - 2025.04.05**/
 – Updated: Add setting descriptions
 

@@ -54,9 +54,10 @@ class SALES_COUNTDOWN_TIMER_Admin_Product {
 
 	public function admin_enqueue_scripts() {
 		$screen = get_current_screen();
+		$suffix = WP_DEBUG ? '' : '.min';
 		if ( $screen->id == 'product' ) {
-			wp_enqueue_script( 'sales-countdown-timer-admin-product', SALES_COUNTDOWN_TIMER_JS . 'sales-countdown-timer-admin-product.js', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
-			wp_enqueue_style( 'sales-countdown-timer-admin-product', SALES_COUNTDOWN_TIMER_CSS . 'sales-countdown-timer-admin-product.css', [], SALES_COUNTDOWN_TIMER_VERSION );
+			wp_enqueue_script( 'sales-countdown-timer-admin-product', SALES_COUNTDOWN_TIMER_JS . 'sales-countdown-timer-admin-product' . $suffix . '.js', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
+			wp_enqueue_style( 'sales-countdown-timer-admin-product', SALES_COUNTDOWN_TIMER_CSS . 'sales-countdown-timer-admin-product' . $suffix . '.css', [], SALES_COUNTDOWN_TIMER_VERSION );
 			/*update price*/
 //			global $post;
 //			$product_id = $post->ID;

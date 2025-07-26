@@ -31,11 +31,12 @@ class SALES_COUNTDOWN_TIMER_Frontend_Shortcode {
 	}
 
 	public function shortcode_enqueue_script() {
+		$suffix = WP_DEBUG ? '' : '.min';
 		if ( ! wp_script_is( 'woo-sctr-shortcode-style', 'registered' ) ) {
-			wp_register_style( 'woo-sctr-shortcode-style', SALES_COUNTDOWN_TIMER_CSS . 'shortcode-style.css', array(), SALES_COUNTDOWN_TIMER_VERSION );
+			wp_register_style( 'woo-sctr-shortcode-style', SALES_COUNTDOWN_TIMER_CSS . 'shortcode-style' . $suffix . '.css', array(), SALES_COUNTDOWN_TIMER_VERSION );
 		}
 		if ( ! wp_script_is( 'woo-sctr-shortcode-script', 'registered' ) ) {
-			wp_register_script( 'woo-sctr-shortcode-script', SALES_COUNTDOWN_TIMER_JS . 'shortcode-script.js', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
+			wp_register_script( 'woo-sctr-shortcode-script', SALES_COUNTDOWN_TIMER_JS . 'shortcode-script' . $suffix . '.js', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
 		}
 	}
 

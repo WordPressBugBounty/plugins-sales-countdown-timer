@@ -1314,6 +1314,23 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="equal width fields">
+                                        <div class="field">
+                                            <label><?php esc_html_e( 'Shortcode position', 'sales-countdown-timer' ) ?></label>
+                                            <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+				                                <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                            </a>
+                                            <p class="description"><?php esc_html_e( 'Display shortcode as static top banner or sticky top/bottom', 'sales-countdown-timer' ); ?>
+                                            </p>
+                                        </div>
+                                        <div class="field">
+                                            <label><?php esc_html_e( 'Shortcode background image', 'sales-countdown-timer' ) ?></label>
+                                            <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+				                                <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                            </a>
+                                        </div>
+                                    </div>
                                     <div class="field">
                                         <h4 class="vi-ui dividing header">
                                             <label><?php esc_html_e( 'Countdown timer', 'sales-countdown-timer' ) ?></label>
@@ -1877,6 +1894,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 	 * Init Script in Admin
 	 */
 	public function admin_enqueue_scripts() {
+		$suffix = WP_DEBUG ? '' : '.min';
 		if ( isset( $_REQUEST['_woo_ctr_admin_nonce'] ) && ! wp_verify_nonce( wc_clean( wp_unslash( $_REQUEST['_woo_ctr_admin_nonce'] ) ), 'woo_ctr_admin_nonce' ) ) {
 			return;
 		}
@@ -1910,14 +1928,14 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 			wp_enqueue_style( 'sales-countdown-timer-semantic-tab', SALES_COUNTDOWN_TIMER_CSS . 'tab.css', [], SALES_COUNTDOWN_TIMER_VERSION );
 			wp_enqueue_style( 'sales-countdown-timer-semantic-header', SALES_COUNTDOWN_TIMER_CSS . 'header.min.css', [], SALES_COUNTDOWN_TIMER_VERSION );
 
-			wp_enqueue_style( 'sales-countdown-timer-admin-css', SALES_COUNTDOWN_TIMER_CSS . 'admin-checkout.css', [], SALES_COUNTDOWN_TIMER_VERSION );
+			wp_enqueue_style( 'sales-countdown-timer-admin-css', SALES_COUNTDOWN_TIMER_CSS . 'admin-checkout' . $suffix . '.css', [], SALES_COUNTDOWN_TIMER_VERSION );
 
 			wp_enqueue_script( 'jquery-ui-sortable' );
 			wp_enqueue_script( 'sales-countdown-timer-semantic-address', SALES_COUNTDOWN_TIMER_JS . 'address.min.js', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
 			wp_enqueue_script( 'sales-countdown-timer-semantic-form', SALES_COUNTDOWN_TIMER_JS . 'form.js', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
 			wp_enqueue_script( 'sales-countdown-timer-semantic-tab', SALES_COUNTDOWN_TIMER_JS . 'tab.js', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
 			wp_enqueue_script( 'sales-countdown-timer-semantic-transition', SALES_COUNTDOWN_TIMER_JS . 'transition.min.js', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
-			wp_enqueue_script( 'sales-countdown-timer-admin-js', SALES_COUNTDOWN_TIMER_JS . 'admin-checkout.js', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
+			wp_enqueue_script( 'sales-countdown-timer-admin-js', SALES_COUNTDOWN_TIMER_JS . 'admin-checkout' . $suffix . '.js', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
 		} elseif ( $page == 'sales-countdown-timer' ) {
 			global $wp_scripts;
 			if ( isset( $wp_scripts->registered['jquery-ui-accordion'] ) ) {
@@ -1958,7 +1976,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 			wp_enqueue_style( 'sales-countdown-timer-semantic-header', SALES_COUNTDOWN_TIMER_CSS . 'header.min.css', [], SALES_COUNTDOWN_TIMER_VERSION );
 			wp_enqueue_style( 'sales-countdown-timer-semantic-popup', SALES_COUNTDOWN_TIMER_CSS . 'popup.min.css', [], SALES_COUNTDOWN_TIMER_VERSION );
 
-			wp_enqueue_style( 'sales-countdown-timer-admin', SALES_COUNTDOWN_TIMER_CSS . 'sales-countdown-timer-admin.css', array(), SALES_COUNTDOWN_TIMER_VERSION );
+			wp_enqueue_style( 'sales-countdown-timer-admin', SALES_COUNTDOWN_TIMER_CSS . 'sales-countdown-timer-admin' . $suffix . '.css', array(), SALES_COUNTDOWN_TIMER_VERSION );
 
 			wp_enqueue_script( 'sales-countdown-timer-semantic-checkbox', SALES_COUNTDOWN_TIMER_JS . 'checkbox.js', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
 			wp_enqueue_script( 'sales-countdown-timer-semantic-dropdown', SALES_COUNTDOWN_TIMER_JS . 'dropdown.js', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
@@ -1967,7 +1985,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 			wp_enqueue_script( 'sales-countdown-timer-semantic-transition', SALES_COUNTDOWN_TIMER_JS . 'transition.min.js', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
 			wp_enqueue_script( 'sales-countdown-timer-semantic-accordion', SALES_COUNTDOWN_TIMER_JS . 'accordion.min.js', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
 
-			wp_enqueue_script( 'sales-countdown-timer-admin', SALES_COUNTDOWN_TIMER_JS . 'sales-countdown-timer-admin.js', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
+			wp_enqueue_script( 'sales-countdown-timer-admin', SALES_COUNTDOWN_TIMER_JS . 'sales-countdown-timer-admin' . $suffix . '.js', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
 			/*Color picker*/
 			wp_enqueue_script(
 				'iris', admin_url( 'js/iris.min.js' ), array(

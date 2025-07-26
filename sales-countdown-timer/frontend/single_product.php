@@ -221,9 +221,10 @@ class SALES_COUNTDOWN_TIMER_Frontend_Single_Product {
 	}
 
 	public function wp_enqueue_scripts() {
+		$suffix = WP_DEBUG ? '' : '.min';
 		if ( $this->id && isset( $this->settings->get_stick_to_top()[ $this->index ] ) && $this->settings->get_stick_to_top()[ $this->index ] ) {
-			wp_enqueue_style( 'sales-countdown-timer-single-product', SALES_COUNTDOWN_TIMER_CSS . 'sales-countdown-timer-single-product.css', array(), SALES_COUNTDOWN_TIMER_VERSION );
-			wp_enqueue_script( 'sales-countdown-timer-single-product', SALES_COUNTDOWN_TIMER_JS . 'sales-countdown-timer-single-product.js', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
+			wp_enqueue_style( 'sales-countdown-timer-single-product', SALES_COUNTDOWN_TIMER_CSS . 'sales-countdown-timer-single-product' . $suffix . '.css', array(), SALES_COUNTDOWN_TIMER_VERSION );
+			wp_enqueue_script( 'sales-countdown-timer-single-product', SALES_COUNTDOWN_TIMER_JS . 'sales-countdown-timer-single-product' . $suffix . '.js', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
 		}
 
 		if ( $this->is_ajax_variation ) {

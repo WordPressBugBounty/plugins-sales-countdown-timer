@@ -1,4 +1,4 @@
-let count = 0;
+// let count = 0;
 let vi_sctr_x;
 // vi_sctr_x = setInterval(function () {
 //     count++;
