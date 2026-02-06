@@ -1,3 +1,9 @@
+/**1.1.9 - 2026.01.20**/
+- Updated: Compatible with WordPress 6.9
+
+/**1.1.8 - 2025.11.10**/
+– Updated: Add preview css/inline css for Elementor edit
+
 /**1.1.7 - 2025.07.26**/
 – Updated: Add setting descriptions
 – Updated: Minify some source code

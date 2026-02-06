@@ -25,6 +25,8 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 				'settings_link'
 			)
 		);
+
+		add_action( 'elementor/preview/enqueue_styles', [ $this, 'custom_elementor_preview_styles' ] );
 	}
 
 	public function admin_menu() {
@@ -43,6 +45,12 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 				array( $this, 'settings_checkout_countdown' )
 			);
 		}
+	}
+
+	public function custom_elementor_preview_styles() {
+		wp_enqueue_style( 'woo-sctr-shortcode-style', SALES_COUNTDOWN_TIMER_CSS . 'shortcode-style.css', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
+		$elm_css = $this->settings->get_countdown_inline_style();
+		wp_add_inline_style( 'woo-sctr-shortcode-style', $elm_css );
 	}
 
 	public function settings_checkout_countdown() {
@@ -1502,7 +1510,13 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                 </div>
                                 <div class="content">
                                     <div class="field">
-
+                                        <div class="field">
+                                            <label><?php esc_html_e( 'Use default date', 'sales-countdown-timer' ) ?></label>
+                                            <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+			                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
+                                            </a>
+                                            <p class="description"><?php esc_html_e( 'This option uses the WooCommerce “Sale Price Dates” setting to set the timer. It also disables all custom product settings and scheduling features provided by the plugin.', 'sales-countdown-timer' ) ?></p>
+                                        </div>
                                         <div class="equal width fields">
                                             <div class="field">
                                                 <label><?php esc_html_e( 'Make countdown timer sticky when scroll', 'sales-countdown-timer' ) ?></label>
