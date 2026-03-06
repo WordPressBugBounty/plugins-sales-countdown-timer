@@ -5,7 +5,7 @@ Tags: checkout countdown for woocommerce, product time countdown for woocommerce
 Requires at least: 5.0
 Tested up to: 6.9
 WC requires at least: 7.0
-WC tested up to: 10.4
+WC tested up to: 10.5
 Requires PHP: 7.0
 Stable tag: trunk
 License: GPL v2 or later
@@ -252,6 +252,9 @@ All features from the free version.
 3. Sale countdown timer on single product page
 
 == Changelog ==
+/**1.1.10 - 2026.03.06**/
+- Update: support class
+
 /**1.1.9 - 2026.01.20**/
 - Updated: Compatible with WordPress 6.9
 

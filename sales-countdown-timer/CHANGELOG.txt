@@ -1,3 +1,6 @@
+/**1.1.10 - 2026.03.06**/
+- Update: support class
+
 /**1.1.9 - 2026.01.20**/
 - Updated: Compatible with WordPress 6.9
 
