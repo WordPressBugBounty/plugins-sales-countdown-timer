@@ -3,9 +3,9 @@ Contributors: villatheme, mrt3vn
 Donate link: https://www.villatheme.com/donate
 Tags: checkout countdown for woocommerce, product time countdown for woocommerce, woocommerce, woocommerce countdown timer, woocommerce sales countdown
 Requires at least: 5.0
-Tested up to: 6.9
+Tested up to: 7.0
 WC requires at least: 7.0
-WC tested up to: 10.5
+WC tested up to: 10.8
 Requires PHP: 7.0
 Stable tag: trunk
 License: GPL v2 or later
@@ -252,6 +252,9 @@ All features from the free version.
 3. Sale countdown timer on single product page
 
 == Changelog ==
+/**1.1.11 - 2026.06.20**/
+- Updated: VillaTheme support
+
 /**1.1.10 - 2026.03.06**/
 - Update: support class
 
