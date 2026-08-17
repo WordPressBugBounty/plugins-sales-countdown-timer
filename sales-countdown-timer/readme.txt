@@ -5,7 +5,7 @@ Tags: checkout countdown for woocommerce, product time countdown for woocommerce
 Requires at least: 5.0
 Tested up to: 7.0
 WC requires at least: 7.0
-WC tested up to: 10.8
+WC tested up to: 11.0
 Requires PHP: 7.0
 Stable tag: trunk
 License: GPL v2 or later
@@ -15,11 +15,11 @@ Create versatile countdown timers for your WordPress site and WooCommerce produc
 
 == Description ==
 
-WooCommerce countdown timer helps to motivate customers purchasing. Many shop owners use WooCommerce countdown timer in sale events, promotions to boost sale, improve sales and revenue. Has your site have WooCommerce countdown timer plugin yet, let’s find out the WooCommerce countdown timer plugin from VillaTheme.
+WooCommerce countdown timer helps to motivate customers purchasing. Many shop owners use WooCommerce countdown timer in sale events, promotions to boost sale, improve sales and revenue. Has your site have WooCommerce countdown timer plugin yet, let's find out the WooCommerce countdown timer plugin from VillaTheme.
 
 Sales Countdown Timer is a plugin that allows shop owners to boost the Sales in the Sale Campaigns. The plugin can display WooCommerce countdown timer any pages by shortcodes. It is a must-have plugin for encouraging customers to purchase by creating urgency psychology.
 
->[Try the Demo](http://new2new.com/?item=sales-countdown-timer "Demo Sales Countdown Timer") |[Documents](http://docs.villatheme.com/?item=sales-countdown-timer "Documents") |[Pro Version](https://1.envato.market/962d3 "Pro Version") | [Facebook group](https://www.facebook.com/groups/villatheme "VillaTheme")
+>[Try the Demo](https://new2new.com/?item=sales-countdown-timer "Demo Sales Countdown Timer") |[Documents](https://docs.villatheme.com/?item=sales-countdown-timer "Documents") |[Pro Version](https://villatheme.com/extensions/sales-countdown-timer "Pro Version") | [Facebook group](https://www.facebook.com/groups/villatheme "VillaTheme")
 
 [youtube https://youtu.be/vS4IOqdtSbw]
 
@@ -33,9 +33,9 @@ Sales Countdown Timer is a plugin that allows shop owners to boost the Sales in 
 
 - **Select specific sale time**: WooCommerce allows you to schedule sale time by date. With Sale Countdown Timer you are able to select specific sale time by hours and minutes.
 
-- **Position in single product pages**: select where the countdown clock will be displayed in single product pages. There are many options for you to select: before product price, after product price, before sale flash badges, after sale flash badges, before “add to cart” button, after “add to cart” button, in the product picture.
+- **Position in single product pages**: select where the countdown clock will be displayed in single product pages. There are many options for you to select: before product price, after product price, before sale flash badges, after sale flash badges, before "add to cart" button, after "add to cart" button, in the product picture.
 
-- **Position in archive pages**: select where will the countdown click appear in archive pages like shop page, categories pages. There are many options for you to select: before product price, after product price, before sale flash badges, after sale flash badges, before “add to cart” button, after “add to cart” button, in the product picture.
+- **Position in archive pages**: select where will the countdown click appear in archive pages like shop page, categories pages. There are many options for you to select: before product price, after product price, before sale flash badges, after sale flash badges, before "add to cart" button, after "add to cart" button, in the product picture.
 
 - **Display in shop page, categories page, related products**: you have options to choose display or hide the countdown clock on these pages.
 
@@ -45,21 +45,21 @@ Sales Countdown Timer is a plugin that allows shop owners to boost the Sales in 
 
 - **Shortcode**: the shortcode {countdown_timer} will display the countdown clock.
 
-&#9658; **Sale Progress bar – Stock quantity bar**: The plugin displays a progress bar display how many products are available for the sale campaign, how many products are sold and how many left.
+&#9658; **Sale Progress bar - Stock quantity bar**: The plugin displays a progress bar display how many products are available for the sale campaign, how many products are sold and how many left.
 
 - **Progress bar message**: Configure the sale progress bar message as you want with shortcodes.
 
 - **Shortcodes**:
 
--{quantity_left} – Number of products left
+-{quantity_left} - Number of products left
 
--{quantity_sold} – Number of products sold
+-{quantity_sold} - Number of products sold
 
--{percentage_left} – Percentage of products left
+-{percentage_left} - Percentage of products left
 
--{percentage_sold} – Percentage of products sold
+-{percentage_sold} - Percentage of products sold
 
--{goal} – The goal that you set on the single product page
+-{goal} - The goal that you set on the single product page
 
 - **Progress bar type**: select to display the sale progress as increase or dicrease.
 
@@ -109,7 +109,7 @@ All features from the free version.
 
 &#9658; **6 months of support:** with each purchase, you will have 6 months of support from VillaTheme. Our developers will help if you have any problem with Sales Countdown Timer.
 
-&#9658; [GET PREMIUM VERSION NOW](https://1.envato.market/962d3)
+&#9658; [GET PREMIUM VERSION NOW](https://villatheme.com/extensions/sales-countdown-timer)
 
 ### MAY BE YOU NEED
 
@@ -135,7 +135,7 @@ All features from the free version.
 
 [Checkout Upsell Funnel for WooCommerce](https://wordpress.org/plugins/checkout-upsell-funnel-for-woo/)
 
-[ChinaDS – Tmall-Taobao Dropshipping for WooCommerce](https://wordpress.org/plugins/chinads-dropshipping-taobao-woocommerce/)
+[ChinaDS - Tmall-Taobao Dropshipping for WooCommerce](https://wordpress.org/plugins/chinads-dropshipping-taobao-woocommerce/)
 
 [Clear Autoptimize Cache Automatically](https://wordpress.org/plugins/clear-autoptimize-cache-automatically/)
 
@@ -205,7 +205,7 @@ All features from the free version.
 
 [Sales Countdown Timer](https://wordpress.org/plugins/sales-countdown-timer/)
 
-[SUBRE – Product Subscription for WooCommerce - Recurring Payments](https://wordpress.org/plugins/subre-product-subscription-for-woo/)
+[SUBRE - Product Subscription for WooCommerce - Recurring Payments](https://wordpress.org/plugins/subre-product-subscription-for-woo/)
 
 [Suggestion Engine for WooCommerce](https://wordpress.org/plugins/woo-suggestion-engine/)
 
@@ -223,26 +223,26 @@ All features from the free version.
 
 [W2S - Migrate WooCommerce to Shopify](https://wordpress.org/plugins/w2s-migrate-woo-to-shopify/)
 
-[WebPOS – Point of Sale for WooCommerce](https://wordpress.org/plugins/webpos-point-of-sale-for-woocommerce/)
+[WebPOS - Point of Sale for WooCommerce](https://wordpress.org/plugins/webpos-point-of-sale-for-woocommerce/)
 
 [WPBulky - WordPress Bulk Edit Post Types](https://wordpress.org/plugins/wpbulky-wp-bulk-edit-post-types/)
 
 
 ### Documentation
 
-- [Getting Started](http://docs.villatheme.com/?item=sales-countdown-timer)
+- [Getting Started](https://docs.villatheme.com/?item=sales-countdown-timer)
 
 ### Plugin Links
 
 - [Project Page](https://villatheme.com)
-- [Documentation](http://docs.villatheme.com/?item=sales-countdown-timer)
+- [Documentation](https://docs.villatheme.com/?item=sales-countdown-timer)
 - [Report Bugs/Issues](https://villatheme.com/knowledge-base/security-is-our-priority/)
 
 == Installation ==
 
 1. Unzip the download package
-1. Upload `sales-countdown-timer` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
+2. Upload `sales-countdown-timer` to the `/wp-content/plugins/` directory
+3. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Frequently Asked Questions ==
 
@@ -252,114 +252,118 @@ All features from the free version.
 3. Sale countdown timer on single product page
 
 == Changelog ==
-/**1.1.11 - 2026.06.20**/
+
+2026.08.17 - version 1.1.12
+- Updated: Compatible WooCommerce 11.0
+
+2026.06.20 - version 1.1.11
 - Updated: VillaTheme support
 
-/**1.1.10 - 2026.03.06**/
+2026.03.06 - version 1.1.10
 - Update: support class
 
-/**1.1.9 - 2026.01.20**/
+2026.01.20 - version 1.1.9
 - Updated: Compatible with WordPress 6.9
 
-/**1.1.8 - 2025.11.10**/
-– Updated: Add preview css/inline css for Elementor edit
+2025.11.10 - version 1.1.8
+- Updated: Add preview css/inline css for Elementor edit
 
-/**1.1.7 - 2025.07.26**/
-– Updated: Add setting descriptions
-– Updated: Minify some source code
-– Fixed: JS error when declaring a variable
+2025.07.26 - version 1.1.7
+- Updated: Add setting descriptions
+- Updated: Minify some source code
+- Fixed: JS error when declaring a variable
 
-/**1.1.6 - 2025.04.05**/
-– Updated: Add setting descriptions
+2025.04.05 - version 1.1.6
+- Updated: Add setting descriptions
 
-/**1.1.5 - 2025.01.03**/
+2025.01.03 - version 1.1.5
 - Fixed: Issue when saving shortcode date time
 - Fixed: Issue when process progress bar quantity
 - Fixed: Issue when reduce size of timer on shop page, mobile
 
-/**1.1.4 - 2024.11.26**/
-– Updated: Add setting descriptions
+2024.11.26 - version 1.1.4
+- Updated: Add setting descriptions
 
-/**1.1.3 - 2024.09.30**/
+2024.09.30 - version 1.1.3
 - Fixed: Issue with Product Bundle Builder for WooCommerce
 
-/**1.1.2 - 2024.06.13**/
+2024.06.13 - version 1.1.2
 - Updated: Compatible with WordPress 6.5
 
-/**1.1.1 - 2024.01.15**/
+2024.01.15 - version 1.1.1
 - Fixed: Progress is not running with woocommerce_ajax_variation_threshold
 
-/**1.1.0 - 2023.09.05**/
+2023.09.05 - version 1.1.0
 - Fixed: Error when Woo product not exits
 - Fixed: Error when Woo not active
 - Updated: Compatible with High-Performance order storage (COT)
 
-/**1.0.11 - 2023.02.08**/
+2023.02.08 - version 1.0.11
 - Fixed: The page does not reload after the end of the countdown
 - Update: Option to show/hide hour init with zero value
 
-/**1.0.10 - 2022.08.30**/
+2022.08.30 - version 1.0.10
 - Fixed: Missing input field of elementor block
 - Fixed: Option countdown timer did not work on all templates
 
-/**1.0.9 - 2022.07.13**/
+2022.07.13 - version 1.0.9
 - Fixed: Missing sale price when updating product
 
-/**1.0.8 - 2022.05.21**/
+2022.05.21 - version 1.0.8
 - Update: support class
 - Update: compatible with Elementor 3.1
 
-/**1.0.7 - 2022.03.21**/
+2022.03.21 - version 1.0.7
 - Update: support class
 
-/**1.0.6 - 2021.11.17**/
+2021.11.17 - version 1.0.6
 - Fixed: Progress bar is not showing on the single product page in some places and does not automatically update the quantity ordered
 
-/**1.0.5.9 - 2020.07.31**/
+2020.07.31 - version 1.0.5.9
 - Update: support class
 
-/**1.0.5.8 - 2021.06.02**/
+2021.06.02 - version 1.0.5.8
 - Update: support class
 
-**1.0.5.7 - 2021.01.26**
+2021.01.26 - version 1.0.5.7
 - Fixed: Can't change Datetime format style
 
-**1.0.5.6 - 2020.08.20**
+2020.08.20 - version 1.0.5.6
 - Fixed: refresh page on iOS device
 
-**1.0.5.5 - 2020.08.14**
+2020.08.14 - version 1.0.5.5
 - Updated: Compatibility with WP 5.5
-– Updated: Display countdown timer
+- Updated: Display countdown timer
 
-**1.0.5.4 - 2020.05.20**
+2020.05.20 - version 1.0.5.4
 - Updated: compatible with Elementor for Shortcode
 
-/**1.0.5.3 - 2020.04.23**/
+2020.04.23 - version 1.0.5.3
 - Update: support class
 
-/**1.0.5.2 - 2020.03.31**/
+2020.03.31 - version 1.0.5.2
 - Fixed: Countdown timer in archive page
 
-/**1.0.5.1 - 2020.03.23**/
+2020.03.23 - version 1.0.5.1
 - Update: support class
 
-/*1.0.5 - 2020.02.01*/
+2020.02.01 - version 1.0.5
 - Added: Premium version url
 - Updated: Video preview
 
-/*1.0.4.5 - 2019.11.23*/
+2019.11.23 - version 1.0.4.5
 - Fixed: Not reflect sales price after countdown time is started
 
-/*1.0.4.4 - 2019.11.16*/
+2019.11.16 - version 1.0.4.4
 - Updated: Sanitize input data
 
-/*1.0.4.2 - 2019.04.03*/
+2019.04.03 - version 1.0.4.2
 - Updated: Make admin notices dismissible
 
-/*1.0.4.1 - 2019.01.03*/
+2019.01.03 - version 1.0.4.1
 - Fixed: Product quantity broken
 
-/*1.0.4 - 2018.12.04*/
+2018.12.04 - version 1.0.4
 - Fixed: Products price when start and end sales
 - Removed: Option to show on related products
 - Added: Option to set size of countdown timer on shop/category page and on mobile
@@ -368,18 +372,18 @@ All features from the free version.
 - Added: Circle countdown timer
 - Added: Make countdown timer sticky when scroll on single product page
 
-/*1.0.3.1 - 2018.11.21*/
+2018.11.21 - version 1.0.3.1
 - Fixed: Current countdown timer style not working in admin settings
 
-/*1.0.3 - 2018.11.21*/
+2018.11.21 - version 1.0.3
 - Updated: Working with variable products
 - Optimized: Speed load
 
-/*1.0.2.1 - 2018.11.10*/
+2018.11.10 - version 1.0.2.1
 - Updated: Class support
 
-/*1.0.2 - 2018.10.17*/
+2018.10.17 - version 1.0.2
 - Updated: Class support
 
-/*1.0.1 - 2018.10.15*/
+2018.10.15 - version 1.0.1
 - Fixed: Class support

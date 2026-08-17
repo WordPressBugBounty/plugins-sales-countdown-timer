@@ -3,7 +3,7 @@
 /*
 Class Name: SALES_COUNTDOWN_TIMER_Admin
 Author: Andy Ha (support@villatheme.com)
-Author URI: http://villatheme.com
+Author URI: https://villatheme.com
 Copyright 2018 villatheme.com. All rights reserved.
 */
 if ( ! defined( 'ABSPATH' ) ) {
@@ -79,7 +79,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 											'sales-countdown-timer' ) ?></label>
                                 </th>
                                 <td>
-                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
                                 </td>
@@ -90,7 +90,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 											'sales-countdown-timer' ); ?></label>
                                 </th>
                                 <td>
-                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
                                     <p class="description"><?php esc_html_e( 'Reset checkout countdown for a cart after this time if customer does not place order during checkout countdown',
@@ -103,7 +103,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 											'sales-countdown-timer' ) ?></label>
                                 </th>
                                 <td>
-                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
                                     <p class="description"><?php esc_html_e( 'The maximum valid time that this offer bellow are applied. When time hits zero, offer will be gone',
@@ -122,7 +122,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                                 <div class="vi-ui basic label">
 													<?php esc_html_e( 'Action', 'sales-countdown-timer' ) ?>
                                                 </div>
-                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3"
+                                                <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer"
                                                    target="_blank">
 													<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                                 </a>
@@ -137,7 +137,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                                     printf( esc_html__( 'Min cart total(%s)', 'sales-countdown-timer' ),
 														esc_html( get_woocommerce_currency_symbol() ) ) ?>
                                                 </div>
-                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3"
+                                                <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer"
                                                    target="_blank">
 													<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                                 </a>
@@ -161,7 +161,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                                 <div class="vi-ui basic label">
 													<?php esc_html_e( 'Free Shipping', 'sales-countdown-timer' ) ?>
                                                 </div>
-                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3"
+                                                <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer"
                                                    target="_blank">
 													<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                                 </a>
@@ -172,7 +172,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                                 <div class="vi-ui basic label">
 													<?php esc_html_e( 'Discount amount', 'sales-countdown-timer' ) ?>
                                                 </div>
-                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3"
+                                                <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer"
                                                    target="_blank">
 													<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                                 </a>
@@ -205,7 +205,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 											'sales-countdown-timer' ) ?></label>
                                 </th>
                                 <td>
-                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
                                     <p class="description">
@@ -220,7 +220,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 											'sales-countdown-timer' ) ?></label>
                                 </th>
                                 <td>
-                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
                                     <p class="description">
@@ -235,7 +235,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 											'sales-countdown-timer' ) ?></label>
                                 </th>
                                 <td>
-                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
                                     <p class="description">
@@ -250,7 +250,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 											'sales-countdown-timer' ) ?></label>
                                 </th>
                                 <td>
-                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
                                     <p class="description">
@@ -273,7 +273,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                 <td>
                                     <div class="field">
                                         <div class="field">
-                                            <a class="vi-ui button yellow" href="https://1.envato.market/962d3"
+                                            <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer"
                                                target="_blank">
 												<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                             </a>
@@ -298,7 +298,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 												'sales-countdown-timer' ) ?></label>
                                     </th>
                                     <td>
-                                        <a class="vi-ui button yellow" href="https://1.envato.market/962d3"
+                                        <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer"
                                            target="_blank">
 											<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                         </a>
@@ -310,7 +310,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 												'sales-countdown-timer' ) ?></label>
                                     </th>
                                     <td>
-                                        <a class="vi-ui button yellow" href="https://1.envato.market/962d3"
+                                        <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer"
                                            target="_blank">
 											<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                         </a>
@@ -322,7 +322,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 												'sales-countdown-timer' ) ?></label>
                                     </th>
                                     <td>
-                                        <a class="vi-ui button yellow" href="https://1.envato.market/962d3"
+                                        <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer"
                                            target="_blank">
 											<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                         </a>
@@ -334,7 +334,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 												'sales-countdown-timer' ) ?></label>
                                     </th>
                                     <td>
-                                        <a class="vi-ui button yellow" href="https://1.envato.market/962d3"
+                                        <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer"
                                            target="_blank">
 											<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                         </a>
@@ -346,7 +346,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 												'sales-countdown-timer' ) ?></label>
                                     </th>
                                     <td>
-                                        <a class="vi-ui button yellow" href="https://1.envato.market/962d3"
+                                        <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer"
                                            target="_blank">
 											<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                         </a>
@@ -364,7 +364,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 												'sales-countdown-timer' ) ?></label>
                                     </th>
                                     <td>
-                                        <a class="vi-ui button yellow" href="https://1.envato.market/962d3"
+                                        <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer"
                                            target="_blank">
 											<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                         </a>
@@ -376,7 +376,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 												'sales-countdown-timer' ) ?></label>
                                     </th>
                                     <td>
-                                        <a class="vi-ui button yellow" href="https://1.envato.market/962d3"
+                                        <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer"
                                            target="_blank">
 											<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                         </a>
@@ -388,7 +388,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 												'sales-countdown-timer' ) ?></label>
                                     </th>
                                     <td>
-                                        <a class="vi-ui button yellow" href="https://1.envato.market/962d3"
+                                        <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer"
                                            target="_blank">
 											<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                         </a>
@@ -400,7 +400,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 												'sales-countdown-timer' ) ?></label>
                                     </th>
                                     <td>
-                                        <a class="vi-ui button yellow" href="https://1.envato.market/962d3"
+                                        <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer"
                                            target="_blank">
 											<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                         </a>
@@ -412,7 +412,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 												'sales-countdown-timer' ) ?></label>
                                     </th>
                                     <td>
-                                        <a class="vi-ui button yellow" href="https://1.envato.market/962d3"
+                                        <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer"
                                            target="_blank">
 											<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                         </a>
@@ -431,7 +431,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 											'sales-countdown-timer' ) ?></label>
                                 </th>
                                 <td>
-                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
                                 </td>
@@ -442,7 +442,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 											'sales-countdown-timer' ) ?></label>
                                 </th>
                                 <td>
-                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
                                     <p class="description">
@@ -487,7 +487,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 											'sales-countdown-timer' ) ?></label>
                                 </th>
                                 <td>
-                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
                                 </td>
@@ -498,7 +498,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 											'sales-countdown-timer' ) ?></label>
                                 </th>
                                 <td>
-                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
                                 </td>
@@ -509,7 +509,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 											'sales-countdown-timer' ) ?></label>
                                 </th>
                                 <td>
-                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
                                     <p class="description">
@@ -530,7 +530,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 											'sales-countdown-timer' ) ?></label>
                                 </th>
                                 <td>
-                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
                                 </td>
@@ -541,7 +541,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 											'sales-countdown-timer' ) ?></label>
                                 </th>
                                 <td>
-                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
                                     <p class="description">
@@ -586,7 +586,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 											'sales-countdown-timer' ) ?></label>
                                 </th>
                                 <td>
-                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
                                 </td>
@@ -597,7 +597,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 											'sales-countdown-timer' ) ?></label>
                                 </th>
                                 <td>
-                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
                                 </td>
@@ -614,7 +614,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 										<?php esc_html_e( 'Save Logs', 'sales-countdown-timer' ) ?></label>
                                 </th>
                                 <td>
-                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
                                 </td>
@@ -625,7 +625,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 										<?php esc_html_e( 'History time', 'sales-countdown-timer' ) ?></label>
                                 </th>
                                 <td>
-                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
                                 </td>
@@ -647,7 +647,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 											'sales-countdown-timer' ) ?></label>
                                 </th>
                                 <td>
-                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
                                     <p class="description"><?php esc_html_e( 'The checkout countdown will be applied only to Administrators for testing purpose',
@@ -660,7 +660,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 											'sales-countdown-timer' ) ?></label>
                                 </th>
                                 <td>
-                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 										<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                     </a>
                                     <p class="description"><?php esc_html_e( 'Reset current checkout discount applied to your account when Test mode is enabled',
@@ -855,7 +855,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                             <div class="field">
                                                 <div class="vi-ui labeled right action input">
                                                     <div class="vi-ui basic label"><?php esc_html_e( 'Countdown evergreen', 'sales-countdown-timer' ); ?></div>
-                                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 														<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                                     </a>
                                                 </div>
@@ -863,7 +863,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                             <div class="field">
                                                 <div class="vi-ui labeled right action input">
                                                     <div class="vi-ui basic label"><?php esc_html_e( 'Restart countdown after', 'sales-countdown-timer' ); ?></div>
-                                                    <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                                    <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 														<?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                                     </a>
                                                 </div>
@@ -902,13 +902,13 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                     </div>
                                     <div class="field">
                                         <label><?php esc_html_e( 'Shortcode upcoming message', 'sales-countdown-timer' ) ?></label>
-                                        <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                        <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 		                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                         </a>
                                     </div>
                                     <div class="field">
                                         <label><?php esc_html_e( 'Shortcode time elapsed message', 'sales-countdown-timer' ) ?></label>
-                                        <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                        <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 		                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                         </a>
                                     </div>
@@ -917,19 +917,19 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                         <div class="equal width fields">
                                             <div class="inline field">
                                                 <label><?php esc_html_e( 'Product list', 'sales-countdown-timer' ) ?></label>
-                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                                <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 				                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                                 </a>
                                             </div>
                                             <div class="inline field">
                                                 <label><?php esc_html_e( 'Mobile', 'sales-countdown-timer' ) ?></label>
-                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                                <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 				                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                                 </a>
                                             </div>
                                             <div class="inline field">
                                                 <label><?php esc_html_e( 'Sticky', 'sales-countdown-timer' ) ?></label>
-                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                                <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 				                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                                 </a>
                                             </div>
@@ -938,13 +938,13 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                     <div class="equal width fields">
                                         <div class="field">
                                             <label><?php esc_html_e( 'Message position', 'sales-countdown-timer' ) ?></label>
-                                            <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                            <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 				                                <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                             </a>
                                         </div>
                                         <div class="field">
                                             <label><?php esc_html_e( 'Time units', 'sales-countdown-timer' ) ?></label>
-                                            <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                            <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 				                                <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                             </a>
                                         </div>
@@ -1326,7 +1326,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                     <div class="equal width fields">
                                         <div class="field">
                                             <label><?php esc_html_e( 'Shortcode position', 'sales-countdown-timer' ) ?></label>
-                                            <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                            <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 				                                <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                             </a>
                                             <p class="description"><?php esc_html_e( 'Display shortcode as static top banner or sticky top/bottom', 'sales-countdown-timer' ); ?>
@@ -1334,7 +1334,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                         </div>
                                         <div class="field">
                                             <label><?php esc_html_e( 'Shortcode background image', 'sales-countdown-timer' ) ?></label>
-                                            <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                            <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 				                                <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                             </a>
                                         </div>
@@ -1512,7 +1512,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                     <div class="field">
                                         <div class="field">
                                             <label><?php esc_html_e( 'Use default date', 'sales-countdown-timer' ) ?></label>
-                                            <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                            <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 			                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                             </a>
                                             <p class="description"><?php esc_html_e( 'This option uses the WooCommerce “Sale Price Dates” setting to set the timer. It also disables all custom product settings and scheduling features provided by the plugin.', 'sales-countdown-timer' ) ?></p>
@@ -1690,19 +1690,19 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                         <div class="equal width fields">
                                             <div class="field">
                                                 <label><?php esc_html_e( 'Progress position on shop page', 'sales-countdown-timer' ) ?></label>
-                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                                <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 		                                            <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                                 </a>
                                             </div>
                                             <div class="field">
                                                 <label><?php esc_html_e( 'Progress position on single product page', 'sales-countdown-timer' ) ?></label>
-                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                                <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 		                                            <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                                 </a>
                                             </div>
                                             <div class="field">
                                                 <label><?php esc_html_e( 'Progress bar preview', 'sales-countdown-timer' ) ?></label>
-                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                                <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 		                                            <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                                 </a>
                                             </div>
@@ -1759,13 +1759,13 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                         <div class="equal width fields">
                                             <div class="field">
                                                 <label><?php esc_html_e( 'Message color', 'sales-countdown-timer' ) ?></label>
-                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                                <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 				                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                                 </a>
                                             </div>
                                             <div class="field">
                                                 <label><?php esc_html_e( 'Font size', 'sales-countdown-timer' ) ?></label>
-                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                                <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 				                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                                 </a>
                                             </div>
@@ -1773,19 +1773,19 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                         <div class="equal width fields">
                                             <div class="field">
                                                 <label><?php esc_html_e( 'Border style', 'sales-countdown-timer' ) ?></label>
-                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                                <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 				                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                                 </a>
                                             </div>
                                             <div class="field">
                                                 <label><?php esc_html_e( 'Border width', 'sales-countdown-timer' ) ?></label>
-                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                                <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 				                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                                 </a>
                                             </div>
                                             <div class="field">
                                                 <label><?php esc_html_e( 'Border color', 'sales-countdown-timer' ) ?></label>
-                                                <a class="vi-ui button yellow" href="https://1.envato.market/962d3" target="_blank">
+                                                <a class="vi-ui button yellow" href="https://villatheme.com/extensions/sales-countdown-timer" target="_blank">
 				                                    <?php esc_html_e( 'Unlock This Feature', 'sales-countdown-timer' ); ?>
                                                 </a>
                                             </div>
@@ -2139,9 +2139,9 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 			new VillaTheme_Support(
 				array(
 					'support'   => 'https://wordpress.org/support/plugin/sales-countdown-timer/',
-					'docs'      => 'http://docs.villatheme.com/?item=sales-countdown-timer',
+					'docs'      => 'https://docs.villatheme.com/?item=sales-countdown-timer',
 					'review'    => 'https://wordpress.org/support/plugin/sales-countdown-timer/reviews/?rate=5#rate-response',
-					'pro_url'   => 'https://1.envato.market/962d3',
+					'pro_url'   => 'https://villatheme.com/extensions/sales-countdown-timer',
 					'css'       => SALES_COUNTDOWN_TIMER_CSS,
 					'image'     => SALES_COUNTDOWN_TIMER_IMAGES,
 					'slug'      => 'sales-countdown-timer',

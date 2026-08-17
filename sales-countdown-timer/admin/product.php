@@ -3,7 +3,7 @@
 /*
 Class Name: SALES_COUNTDOWN_TIMER_Product
 Author: Andy Ha (support@villatheme.com)
-Author URI: http://villatheme.com
+Author URI: https://villatheme.com
 Copyright 2017 villatheme.com. All rights reserved.
 */
 if ( ! defined( 'ABSPATH' ) ) {

@@ -3,22 +3,22 @@
  * Plugin Name: Sales Countdown Timer
  * Plugin URI: https://villatheme.com/extensions/sales-countdown-timer/
  * Description: Create a sense of urgency with a countdown to the beginning or end of sales, store launch or other events for higher conversions.
- * Version: 1.1.11
+ * Version: 1.1.12
  * Author: VillaTheme
- * Author URI: http://villatheme.com
+ * Author URI: https://villatheme.com
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: sales-countdown-timer
  * Copyright 2018 - 2026 VillaTheme.com. All rights reserved.
  * Tested up to: 7.0
  * WC requires at least: 7.0
- * WC tested up to: 10.8
+ * WC tested up to: 11.0
  * Requires PHP: 7.0
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-define( 'SALES_COUNTDOWN_TIMER_VERSION', '1.1.11' );
+define( 'SALES_COUNTDOWN_TIMER_VERSION', '1.1.12' );
 
 /**
  * Class SALES_COUNTDOWN_TIMER
@@ -38,6 +38,9 @@ class SALES_COUNTDOWN_TIMER {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 		if ( is_plugin_active( 'sctv-sales-countdown-timer/sctv-sales-countdown-timer.php' ) ) {
+			return;
+		}
+		if ( is_plugin_active( 'countix-sales-countdown-timer/countix-sales-countdown-timer.php' ) ) {
 			return;
 		}
 
