@@ -1,12 +1,12 @@
-=== Sales Countdown Timer ===
+=== Countix Sales Countdown Timer ===
 Contributors: villatheme, mrt3vn
 Donate link: https://www.villatheme.com/donate
 Tags: checkout countdown for woocommerce, product time countdown for woocommerce, woocommerce, woocommerce countdown timer, woocommerce sales countdown
-Requires at least: 5.0
-Tested up to: 7.0
+Requires at least: 5.2
+Tested up to: 7.1
 WC requires at least: 7.0
 WC tested up to: 11.0
-Requires PHP: 7.0
+Requires PHP: 7.4
 Stable tag: trunk
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -17,17 +17,17 @@ Create versatile countdown timers for your WordPress site and WooCommerce produc
 
 WooCommerce countdown timer helps to motivate customers purchasing. Many shop owners use WooCommerce countdown timer in sale events, promotions to boost sale, improve sales and revenue. Has your site have WooCommerce countdown timer plugin yet, let's find out the WooCommerce countdown timer plugin from VillaTheme.
 
-Sales Countdown Timer is a plugin that allows shop owners to boost the Sales in the Sale Campaigns. The plugin can display WooCommerce countdown timer any pages by shortcodes. It is a must-have plugin for encouraging customers to purchase by creating urgency psychology.
+Countix Sales Countdown Timer is a plugin that allows shop owners to boost the Sales in the Sale Campaigns. The plugin can display WooCommerce countdown timer any pages by shortcodes. It is a must-have plugin for encouraging customers to purchase by creating urgency psychology.
 
->[Try the Demo](https://new2new.com/?item=sales-countdown-timer "Demo Sales Countdown Timer") |[Documents](https://docs.villatheme.com/?item=sales-countdown-timer "Documents") |[Pro Version](https://villatheme.com/extensions/sales-countdown-timer "Pro Version") | [Facebook group](https://www.facebook.com/groups/villatheme "VillaTheme")
+>[Try the Demo](https://new2new.com/?item=sales-countdown-timer "Demo Countix Sales Countdown Timer") |[Documents](https://docs.villatheme.com/?item=sales-countdown-timer "Documents") |[Pro Version](https://villatheme.com/extensions/sales-countdown-timer "Pro Version") | [Facebook group](https://www.facebook.com/groups/villatheme "VillaTheme")
 
 [youtube https://youtu.be/vS4IOqdtSbw]
 
 ### FEATURES
 
-&#9658; **WooCommerce Countdown Timer**: The plugin displays sales countdown timers in single product pages and the shop page of WooCommerce. The clocks will notify customers when the sales end or how many sale product quantities left. In WooCommerce single product, you can select Sales Countdown Timer settings and schedule sale campaigns.
+&#9658; **WooCommerce Countdown Timer**: The plugin displays sales countdown timers in single product pages and the shop page of WooCommerce. The clocks will notify customers when the sales end or how many sale product quantities left. In WooCommerce single product, you can select Countix Sales Countdown Timer settings and schedule sale campaigns.
 
-- **Select Sales Countdown Timer profile in WooCommerce single product page, variation products, and select Sales Countdown Timer for bulk products.**
+- **Select Countix Sales Countdown Timer profile in WooCommerce single product page, variation products, and select Countix Sales Countdown Timer for bulk products.**
 
 - **Display countdown clock base on WooCommerce sale scheduled time**
 
@@ -75,7 +75,7 @@ Sales Countdown Timer is a plugin that allows shop owners to boost the Sales in 
 
 - **Select countdown time in the plugin backend**.
 
-&#9658; **Multiple setting profiles**:The plugin allows you to set up as many Countdown Timer profiles as you want. Each profile is completely a standalone Sales Countdown Timer. With each profile, you are able to set up full settings include General settings, Design settings.
+&#9658; **Multiple setting profiles**:The plugin allows you to set up as many Countdown Timer profiles as you want. Each profile is completely a standalone Countix Sales Countdown Timer. With each profile, you are able to set up full settings include General settings, Design settings.
 
 &#9658; **Design**:Feel free to design the sales countdown timer to fit with your website front-end.
 
@@ -107,7 +107,7 @@ All features from the free version.
 
 - **Design the checkout countdown timer on the checkout page and other assigned pages**.
 
-&#9658; **6 months of support:** with each purchase, you will have 6 months of support from VillaTheme. Our developers will help if you have any problem with Sales Countdown Timer.
+&#9658; **6 months of support:** with each purchase, you will have 6 months of support from VillaTheme. Our developers will help if you have any problem with Countix Sales Countdown Timer.
 
 &#9658; [GET PREMIUM VERSION NOW](https://villatheme.com/extensions/sales-countdown-timer)
 
@@ -203,7 +203,7 @@ All features from the free version.
 
 [S2W - Import Shopify to WooCommerce](https://wordpress.org/plugins/import-shopify-to-woocommerce/)
 
-[Sales Countdown Timer](https://wordpress.org/plugins/sales-countdown-timer/)
+[Countix Sales Countdown Timer](https://wordpress.org/plugins/sales-countdown-timer/)
 
 [SUBRE - Product Subscription for WooCommerce - Recurring Payments](https://wordpress.org/plugins/subre-product-subscription-for-woo/)
 

@@ -1,4 +1,4 @@
-*** Sales Countdown Timer Changelog ***
+*** Countix Sales Countdown Timer Changelog ***
 
 2026.08.17 - version 1.1.12
 - Updated: Compatible WooCommerce 11.0
@@ -65,9 +65,6 @@
 
 2021.11.17 - version 1.0.6
 - Fixed: Progress bar is not showing on the single product page in some places and does not automatically update the quantity ordered
-
-/**1.0.5.10 - 2020..**/
-- Update: Check existence of $product variable before using inside a WooCommerce template hook
 
 2020.07.31 - version 1.0.5.9
 - Update: support class
