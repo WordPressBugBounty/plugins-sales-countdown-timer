@@ -6,16 +6,14 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals -- Intentional SALES_COUNTDOWN_TIMER_ / woo_sctr_ / sctv_ prefixes.
 
 class SALES_COUNTDOWN_TIMER_Frontend_Shortcode {
 	protected $settings;
-	protected $data;
 
 	public function __construct() {
 		$this->settings = new SALES_COUNTDOWN_TIMER_Data();
-//		/*Register scripts*/
 		add_action( 'init', array( $this, 'shortcode_init' ) );
-		add_action( 'wp_print_styles', array( $this, 'sctv_countdown_css' ) );
 	}
 
 	public function shortcode_init() {
@@ -23,10 +21,18 @@ class SALES_COUNTDOWN_TIMER_Frontend_Shortcode {
 		add_action( 'wp_enqueue_scripts', array( $this, 'shortcode_enqueue_script' ) );
 	}
 
-	public function sctv_countdown_css() {
+	/**
+	 * Attach profile CSS once when countdown assets are enqueued.
+	 */
+	public function maybe_add_countdown_inline_css() {
+		static $added = false;
+		if ( $added ) {
+			return;
+		}
 		$css = SALES_COUNTDOWN_TIMER_Countdown_Style::get_frontend_countdown_css();
-		if ( $css ) {
-			echo '<style id="woo-sctr-frontend-countdown-style" type="text/css">' . esc_attr( $css ) . '</style>';
+		if ( $css && wp_style_is( 'woo-sctr-shortcode-style', 'enqueued' ) ) {
+			wp_add_inline_style( 'woo-sctr-shortcode-style', $css );
+			$added = true;
 		}
 	}
 
@@ -41,30 +47,57 @@ class SALES_COUNTDOWN_TIMER_Frontend_Shortcode {
 	}
 
 	public function register_shortcode( $atts ) {
-		extract( shortcode_atts( array(
-			'id'                        => '',
-			'names'                     => '',
-			'message'                   => '',
-			'active'                    => 0,
-			'enable_single_product'     => 0,
-			'is_variation'              => 0,
-			'sale_price_type'           => 0,
-			'time_type'                 => 'fixed',
-			'datetime_format'           => '',
-			'hide_zero_items'           => 0,
-			'sale_from_date'            => 0,
-			'sale_to_date'              => 0,
-			'sale_from_time'            => 0,
-			'sale_to_time'              => 0,
-			'upcoming'                  => 0,
-			'upcoming_message'          => 'Starts in {countdown_timer}',
-			'style'                     => 1,
-			'time_separator'            => '',
-			'display_type'              => '',
-			'sale_countdown_timer_id_t' => '',
-		), $atts ) );
+		$atts = shortcode_atts(
+			array(
+				'id'                        => '',
+				'names'                     => '',
+				'message'                   => '',
+				'active'                    => 0,
+				'enable_single_product'     => 0,
+				'is_variation'              => 0,
+				'sale_price_type'           => 0,
+				'time_type'                 => 'fixed',
+				'datetime_format'           => '',
+				'hide_zero_items'           => 0,
+				'sale_from_date'            => 0,
+				'sale_to_date'              => 0,
+				'sale_from_time'            => 0,
+				'sale_to_time'              => 0,
+				'upcoming'                  => 0,
+				'upcoming_message'          => 'Starts in {countdown_timer}',
+				'style'                     => 1,
+				'time_separator'            => '',
+				'display_type'              => '',
+				'sale_countdown_timer_id_t' => '',
+			),
+			$atts,
+			'sales_countdown_timer'
+		);
+
+		$id                        = $atts['id'];
+		$names                     = $atts['names'];
+		$message                   = $atts['message'];
+		$active                    = $atts['active'];
+		$enable_single_product     = $atts['enable_single_product'];
+		$is_variation              = $atts['is_variation'];
+		$sale_price_type           = $atts['sale_price_type'];
+		$time_type                 = $atts['time_type'];
+		$datetime_format           = $atts['datetime_format'];
+		$hide_zero_items           = $atts['hide_zero_items'];
+		$sale_from_date            = $atts['sale_from_date'];
+		$sale_to_date              = $atts['sale_to_date'];
+		$sale_from_time            = $atts['sale_from_time'];
+		$sale_to_time              = $atts['sale_to_time'];
+		$upcoming                  = $atts['upcoming'];
+		$upcoming_message          = $atts['upcoming_message'];
+		$style                     = $atts['style'];
+		$time_separator            = $atts['time_separator'];
+		$display_type              = $atts['display_type'];
+		$sale_countdown_timer_id_t = $atts['sale_countdown_timer_id_t'];
+
 		global $sale_countdown_timer_count;
 		$sale_countdown_timer_count ++;
+		$sale_countdown_timer_id_t = sanitize_html_class( (string) $sale_countdown_timer_id_t );
 		$sale_countdown_timer_id = $sale_countdown_timer_id_t ? $sale_countdown_timer_id_t . '_' . $sale_countdown_timer_count : $sale_countdown_timer_count;
 		$now                     = current_time( 'timestamp' );
 		$sale_from_date          = strtotime( $sale_from_date );
@@ -74,8 +107,8 @@ class SALES_COUNTDOWN_TIMER_Frontend_Shortcode {
 		$sale_text_before        = $sale_text_after = '';
 		$day                     = $hour = $minute = $second = '';
 		if ( $id ) {
-			$index = array_search( $id, $this->settings->get_id() );
-			if ( $index >= 0 ) {
+			$index = array_search( $id, $this->settings->get_id(), true );
+			if ( false !== $index ) {
 				if ( ! $sale_from_date && ! $enable_single_product ) {
 					$sale_from_date = strtotime( $this->settings->get_sale_from_date()[ $index ] );
 				}
@@ -111,7 +144,6 @@ class SALES_COUNTDOWN_TIMER_Frontend_Shortcode {
 				}
 			}
 		}
-//		/*pass settings arguments*/
 		if ( ! $active ) {
 			return false;
 		}
@@ -185,8 +217,8 @@ class SALES_COUNTDOWN_TIMER_Frontend_Shortcode {
 		}
 		if ( ! wp_script_is( 'woo-sctr-shortcode-style', 'enqueued' ) ) {
 			wp_enqueue_style( 'woo-sctr-shortcode-style' );
-
 		}
+		$this->maybe_add_countdown_inline_css();
 		$shop_css = '';
 		if ( is_tax( 'product_cat' ) || is_post_type_archive( 'product' ) ) {
 			if ( $countdown_timer_padding ) {
@@ -236,87 +268,87 @@ class SALES_COUNTDOWN_TIMER_Frontend_Shortcode {
 		$css = '';
 		if ( $display_type == 4 ) {
 			/*set circle fill*/
-			$css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-date.woo-sctr-shortcode-countdown-unit .woo-sctr-progress-circle .woo-sctr-value-bar{' . esc_attr__( 'transform: rotate(' ) . $day_deg . 'deg);}';
-			$css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-hour.woo-sctr-shortcode-countdown-unit .woo-sctr-progress-circle .woo-sctr-value-bar{' . esc_attr__( 'transform: rotate(' ) . $hour_deg . 'deg);}';
-			$css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-minute.woo-sctr-shortcode-countdown-unit .woo-sctr-progress-circle .woo-sctr-value-bar{' . esc_attr__( 'transform: rotate(' ) . $min_deg . 'deg);}';
-			$css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-second.woo-sctr-shortcode-countdown-unit .woo-sctr-progress-circle .woo-sctr-value-bar{' . esc_attr__( 'transform: rotate(' ) . $sec_deg . 'deg);}';
+			$css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-date.woo-sctr-shortcode-countdown-unit .woo-sctr-progress-circle .woo-sctr-value-bar{' . 'transform: rotate(' . esc_attr( $day_deg ) . 'deg);}';
+			$css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-hour.woo-sctr-shortcode-countdown-unit .woo-sctr-progress-circle .woo-sctr-value-bar{' . 'transform: rotate(' . esc_attr( $hour_deg ) . 'deg);}';
+			$css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-minute.woo-sctr-shortcode-countdown-unit .woo-sctr-progress-circle .woo-sctr-value-bar{' . 'transform: rotate(' . esc_attr( $min_deg ) . 'deg);}';
+			$css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-second.woo-sctr-shortcode-countdown-unit .woo-sctr-progress-circle .woo-sctr-value-bar{' . 'transform: rotate(' . esc_attr( $sec_deg ) . 'deg);}';
 			/*mobile*/
 			$css .= '@media screen and (max-width:600px){';
 			if ( $countdown_timer_padding_mobile !== '' ) {
-				$css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1{padding:' . $countdown_timer_padding_mobile . 'px;}';
+				$css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1{padding:' . esc_attr( $countdown_timer_padding_mobile ) . 'px;}';
 			}
 			if ( $datetime_value_font_size_mobile !== '' ) {
 				$css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-progress-circle{';
-				$css .= esc_attr__( 'font-size: ' ) . $datetime_value_font_size_mobile . 'px;';
+				$css .= 'font-size: ' . esc_attr( $datetime_value_font_size_mobile ) . 'px;';
 				$css .= '}';
 			}
 			if ( $datetime_unit_font_size_mobile !== '' ) {
-				$css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-text{' . esc_attr__( 'font-size:' ) . $datetime_unit_font_size_mobile . 'px;}';
+				$css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-text{font-size:' . esc_attr( $datetime_unit_font_size_mobile ) . 'px;}';
 			}
 			$css .= '}';
 		} else {
 			$css1 = '';
 			if ( $countdown_timer_item_height ) {
-				$css1 .= esc_attr__( 'height:' ) . $countdown_timer_item_height . 'px;';
+				$css1 .= 'height:' . esc_attr( $countdown_timer_item_height ) . 'px;';
 			}
 			if ( $countdown_timer_item_width ) {
-				$css1 .= esc_attr__( 'width:' ) . $countdown_timer_item_width . 'px;';
+				$css1 .= 'width:' . esc_attr( $countdown_timer_item_width ) . 'px;';
 			}
 			if ( $countdown_timer_item_border_radius ) {
-				$css1 .= esc_attr__( 'border-radius:' ) . $countdown_timer_item_border_radius . 'px;';
+				$css1 .= 'border-radius:' . esc_attr( $countdown_timer_item_border_radius ) . 'px;';
 			}
 			if ( $countdown_timer_item_border_color ) {
-				$css1 .= esc_attr__( 'border:1px solid ' ) . $countdown_timer_item_border_color . ';';
+				$css1 .= 'border:1px solid ' . esc_attr( $countdown_timer_item_border_color ) . ';';
 			}
 			//shop resize
             if ( $datetime_value_font_size ) {
 	            $css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-value,.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-value-container{';
-	            $css .= esc_attr__( 'font-size: ' ) . $datetime_value_font_size . 'px;';
+	            $css .= 'font-size: ' . esc_attr( $datetime_value_font_size ) . 'px;';
 	            $css .= '}';
             }
             if ( $datetime_unit_font_size ) {
-	            $css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-text{' . esc_attr__( 'font-size:' ) . $datetime_unit_font_size . 'px;}';
+	            $css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-text{font-size:' . esc_attr( $datetime_unit_font_size ) . 'px;}';
             }
 
 			/*mobile*/
 			$mobile_css = '@media screen and (max-width:600px){';
 			if ( $countdown_timer_padding_mobile !== '' ) {
-				$mobile_css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1{padding:' . $countdown_timer_padding_mobile . 'px;}';
+				$mobile_css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1{padding:' . esc_attr( $countdown_timer_padding_mobile ) . 'px;}';
 			}
 			if ( $datetime_value_font_size_mobile !== '' ) {
 				$mobile_css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-value,.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-value-container{';
-				$mobile_css .= esc_attr__( 'font-size: ' ) . $datetime_value_font_size_mobile . 'px;';
+				$mobile_css .= 'font-size: ' . esc_attr( $datetime_value_font_size_mobile ) . 'px;';
 				$mobile_css .= '}';
 			}
 			if ( $datetime_unit_font_size_mobile !== '' ) {
-				$mobile_css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-text{' . esc_attr__( 'font-size:' ) . $datetime_unit_font_size_mobile . 'px;}';
+				$mobile_css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-text{font-size:' . esc_attr( $datetime_unit_font_size_mobile ) . 'px;}';
 			}
 
 			if ( $css1 ) {
 				if ( $display_type == 1 ) {
 					$css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-1 .woo-sctr-shortcode-countdown-unit{' . $css1 . '}';
 					if ( $countdown_timer_item_height_mobile !== '' ) {
-						$mobile_css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-1 .woo-sctr-shortcode-countdown-unit{' . esc_attr__( 'height:' ) . $countdown_timer_item_height_mobile . 'px;}';
+						$mobile_css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-1 .woo-sctr-shortcode-countdown-unit{height:' . esc_attr( $countdown_timer_item_height_mobile ) . 'px;}';
 					}
 					if ( $countdown_timer_item_width_mobile !== '' ) {
-						$mobile_css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-1 .woo-sctr-shortcode-countdown-unit{' . esc_attr__( 'width:' ) . $countdown_timer_item_width_mobile . 'px;}';
+						$mobile_css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-1 .woo-sctr-shortcode-countdown-unit{width:' . esc_attr( $countdown_timer_item_width_mobile ) . 'px;}';
 					}
 				} elseif ( $display_type == 2 ) {
 					if ( $animation_style == 'default' ) {
 						$css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-2 .woo-sctr-shortcode-countdown-value{' . $css1 . '}';
 						if ( $countdown_timer_item_height_mobile !== '' ) {
-							$mobile_css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-2 .woo-sctr-shortcode-countdown-value{' . esc_attr__( 'height:' ) . $countdown_timer_item_height_mobile . 'px;}';
+							$mobile_css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-2 .woo-sctr-shortcode-countdown-value{height:' . esc_attr( $countdown_timer_item_height_mobile ) . 'px;}';
 						}
 						if ( $countdown_timer_item_width_mobile !== '' ) {
-							$mobile_css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-2 .woo-sctr-shortcode-countdown-value{' . esc_attr__( 'width:' ) . $countdown_timer_item_width_mobile . 'px;}';
+							$mobile_css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-2 .woo-sctr-shortcode-countdown-value{width:' . esc_attr( $countdown_timer_item_width_mobile ) . 'px;}';
 						}
 					} else {
 						$css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-2 .woo-sctr-shortcode-countdown-value-container{' . $css1 . '}';
 						if ( $countdown_timer_item_height_mobile !== '' ) {
-							$mobile_css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-2 .woo-sctr-shortcode-countdown-value-container{' . esc_attr__( 'height:' ) . $countdown_timer_item_height_mobile . 'px;}';
+							$mobile_css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-2 .woo-sctr-shortcode-countdown-value-container{height:' . esc_attr( $countdown_timer_item_height_mobile ) . 'px;}';
 						}
 						if ( $countdown_timer_item_width_mobile !== '' ) {
-							$mobile_css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-2 .woo-sctr-shortcode-countdown-value-container{' . esc_attr__( 'width:' ) . $countdown_timer_item_width_mobile . 'px;}';
+							$mobile_css .= '.woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-' . $sale_countdown_timer_id . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-2 .woo-sctr-shortcode-countdown-value-container{width:' . esc_attr( $countdown_timer_item_width_mobile ) . 'px;}';
 						}
 					}
 				}

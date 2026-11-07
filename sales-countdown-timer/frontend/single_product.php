@@ -6,6 +6,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals -- Intentional SALES_COUNTDOWN_TIMER_ prefixes and WooCommerce hooks.
 
 class SALES_COUNTDOWN_TIMER_Frontend_Single_Product {
 	protected $settings;
@@ -41,26 +42,65 @@ class SALES_COUNTDOWN_TIMER_Frontend_Single_Product {
 	}
 
 
+	/**
+	 * Correct scheduled-sale price meta only when mismatched, at most once per transient TTL.
+	 *
+	 * @param WC_Product $product Product or variation.
+	 * @param int        $parent_id Optional variable parent id for price cache bust.
+	 */
+	protected function maybe_correct_sale_schedule( $product, $parent_id = 0 ) {
+		if ( ! $product || ! $product->get_sale_price( 'edit' ) ) {
+			return;
+		}
+		$product_id    = $product->get_id();
+		$transient_key = 'woo_sctr_sale_schedule_sync_' . $product_id;
+		if ( get_transient( $transient_key ) ) {
+			return;
+		}
+
+		$now     = current_time( 'timestamp', true );
+		$regular = $product->get_regular_price( 'edit' );
+		$price   = $product->get_price( 'edit' );
+		$sale    = $product->get_sale_price( 'edit' );
+		$from    = $product->get_date_on_sale_from( 'edit' );
+		$to      = $product->get_date_on_sale_to( 'edit' );
+		$from_ts = ( $from && $from->getTimestamp() ) ? $from->getTimestamp() : 0;
+		$to_ts   = ( $to && $to->getTimestamp() ) ? $to->getTimestamp() : 0;
+
+		$needs_upcoming = ( (string) $regular !== (string) $price && $from_ts && $now < $from_ts );
+		$needs_expire   = ( $to_ts && $now > $to_ts );
+		$needs_start    = ( (string) $regular === (string) $price && $from_ts && $now >= $from_ts && ( ! $to_ts || $now <= $to_ts ) );
+
+		if ( ! $needs_upcoming && ! $needs_expire && ! $needs_start ) {
+			return;
+		}
+
+		if ( $needs_upcoming ) {
+			update_post_meta( $product_id, '_price', $regular );
+			$product->set_price( $regular );
+		} elseif ( $needs_expire ) {
+			update_post_meta( $product_id, '_sale_price_old_woo_ctr', $sale );
+			$product->set_price( $regular );
+			$product->set_sale_price( '' );
+			$product->set_date_on_sale_to( '' );
+			$product->set_date_on_sale_from( '' );
+			$product->save();
+			delete_post_meta( $product_id, '_woo_ctr_product_sold_quantity' );
+		} elseif ( $needs_start ) {
+			update_post_meta( $product_id, '_price', $sale );
+			$product->set_price( $sale );
+		}
+
+		if ( $parent_id ) {
+			delete_transient( 'wc_var_prices_' . $parent_id );
+		}
+		set_transient( $transient_key, 1, HOUR_IN_SECONDS );
+	}
+
 	public function woocommerce_available_variation( $variation_data, $parent, $variation ) {
-		$variation_id = $variation->get_id();
+		$this->maybe_correct_sale_schedule( $variation, $parent ? $parent->get_id() : 0 );
 		if ( ! $variation->get_sale_price( 'edit' ) ) {
 			return $variation_data;
-		}
-		if ( $variation->get_regular_price( 'edit' ) != $variation->get_price( 'edit' ) ) {
-			if ( $variation->get_date_on_sale_from( 'edit' ) && $variation->get_date_on_sale_from( 'edit' )->getTimestamp() && current_time( 'timestamp', true ) < $variation->get_date_on_sale_from( 'edit' )->getTimestamp() ) {
-				update_post_meta( $variation_id, '_price', $variation->get_regular_price( 'edit' ) );
-				$variation->set_price( $variation->get_regular_price( 'edit' ) );
-			}
-		}
-		if ( $variation->get_date_on_sale_to( 'edit' ) && $variation->get_date_on_sale_to( 'edit' )->getTimestamp() && current_time( 'timestamp', true ) > $variation->get_date_on_sale_to( 'edit' )->getTimestamp() ) {
-			update_post_meta( $variation_id, '_sale_price_old_woo_ctr', $variation->get_sale_price( 'edit' ) );
-			$regular_price = $variation->get_regular_price();
-			$variation->set_price( $regular_price );
-			$variation->set_sale_price( '' );
-			$variation->set_date_on_sale_to( '' );
-			$variation->set_date_on_sale_from( '' );
-			$variation->save();
-			delete_post_meta( $variation_id, '_woo_ctr_product_sold_quantity' );
 		}
 		if ( ! $variation->is_in_stock() ) {
 			return $variation_data;
@@ -86,13 +126,12 @@ class SALES_COUNTDOWN_TIMER_Frontend_Single_Product {
 			$sale_to_time   = $sale_to - strtotime( $sale_to_date );
 			$sale_from_time = woo_ctr_time_revert( $sale_from_time );
 			$sale_to_time   = woo_ctr_time_revert( $sale_to_time );
-//		    calculate sold quantity during campaign
 			$data                       = $variation->get_meta( '_woo_ctr_product_sold_quantity', true ) ? ( $variation->get_meta( '_woo_ctr_product_sold_quantity', true ) ) : array();
 			$order_status               = $this->settings->get_progress_bar_order_status()[ $index ] ? explode( ',', $this->settings->get_progress_bar_order_status()[ $index ] ) : array();
 			$progress_bar_message       = $this->settings->get_progress_bar_message()[ $index ];
 			$progress_bar_type          = $this->settings->get_progress_bar_type()[ $index ];
 			$progress_bar_real_quantity = $this->get_progress_bar_real_quantity( $data, $order_status );
-			$progress_bar_html          = $this->get_progress_bar_html( $variation_id, $index, $progress_bar_real_quantity, $progress_bar_message, $progress_bar_type );
+			$progress_bar_html          = $this->get_progress_bar_html( $variation->get_id(), $index, $progress_bar_real_quantity, $progress_bar_message, $progress_bar_type );
 			if ( $this->settings->get_progress_bar_position()[ $index ] == 'above_countdown' ) {
 				$variation_data['variation_description'] .= $progress_bar_html . do_shortcode( '[sales_countdown_timer enable_single_product="1" id="' . $id . '" sale_from_date="' . $sale_from_date . '" sale_from_time="' . $sale_from_time . '" sale_to_date="' . $sale_to_date . '" sale_to_time="' . $sale_to_time . '" is_variation="1"]' );
 			} else {
@@ -107,117 +146,73 @@ class SALES_COUNTDOWN_TIMER_Frontend_Single_Product {
 		if ( is_admin() ) {
 			return;
 		}
-		if ( is_product() && is_single() ) {
-			/*single product page*/
-			global $post;
-			$product_id = $post->ID;
-			$product    = wc_get_product( $product_id );
-			if ( $product ) {
-				if ( $product->is_type( 'variable' ) ) {
-					$variations = $product->get_children();
-					if ( is_array( $variations ) && count( $variations ) ) {
-						$this->is_ajax_variation = count( $variations ) > apply_filters( 'woocommerce_ajax_variation_threshold', 30, $product );
-						foreach ( $variations as $variation_key => $variation_id ) {
-							if ( ! get_transient( 'woo_sctr_update_variable_price_start_sale_' . $variation_id ) ) {
-								delete_transient( 'wc_var_prices_' . $product_id );
-								set_transient( 'woo_sctr_update_variable_price_start_sale_' . $variation_id, $variation_id );
-							}
-							$variation = wc_get_product( $variation_id );
-							if ( $variation ) {
-								if ( ! $variation->get_sale_price( 'edit' ) ) {
-									continue;
-								}
-								if ( $variation->get_regular_price( 'edit' ) != $variation->get_price( 'edit' ) ) {
-									if ( $variation->get_date_on_sale_from( 'edit' ) && $variation->get_date_on_sale_from( 'edit' )->getTimestamp() && current_time( 'timestamp', true ) < $variation->get_date_on_sale_from( 'edit' )->getTimestamp() ) {
-										update_post_meta( $variation_id, '_price', $variation->get_regular_price( 'edit' ) );
-										$variation->set_price( $variation->get_regular_price( 'edit' ) );
-									}
-								}
-								if ( $variation->get_date_on_sale_to( 'edit' ) && $variation->get_date_on_sale_to( 'edit' )->getTimestamp() && current_time( 'timestamp', true ) > $variation->get_date_on_sale_to( 'edit' )->getTimestamp() ) {
-									update_post_meta( $variation_id, '_sale_price_old_woo_ctr', $variation->get_sale_price( 'edit' ) );
-									$regular_price = $variation->get_regular_price();
-									$variation->set_price( $regular_price );
-									$variation->set_sale_price( '' );
-									$variation->set_date_on_sale_to( '' );
-									$variation->set_date_on_sale_from( '' );
-									$variation->save();
-									delete_post_meta( $variation_id, '_woo_ctr_product_sold_quantity' );
-								}
-							}
-						}
-					}
-
-				} else {
-					if ( ! $product->get_sale_price( 'edit' ) ) {
-						return;
-					}
-					if ( $product->get_regular_price( 'edit' ) != $product->get_price( 'edit' ) ) {
-						if ( $product->get_date_on_sale_from( 'edit' ) && $product->get_date_on_sale_from( 'edit' )->getTimestamp() && current_time( 'timestamp', true ) < $product->get_date_on_sale_from( 'edit' )->getTimestamp() ) {
-							update_post_meta( $product_id, '_price', $product->get_regular_price( 'edit' ) );
-							$product->set_price( $product->get_regular_price( 'edit' ) );
-						} elseif ( $product->get_date_on_sale_to( 'edit' ) && $product->get_date_on_sale_to( 'edit' )->getTimestamp() && current_time( 'timestamp', true ) > $product->get_date_on_sale_to( 'edit' )->getTimestamp() ) {
-							update_post_meta( $product_id, '_sale_price_old_woo_ctr', $product->get_sale_price( 'edit' ) );
-							$regular_price = $product->get_regular_price();
-							$product->set_price( $regular_price );
-							$product->set_sale_price( '' );
-							$product->set_date_on_sale_to( '' );
-							$product->set_date_on_sale_from( '' );
-							$product->save();
-							delete_post_meta( $product_id, '_woo_ctr_product_sold_quantity' );
-						}
-					} else {
-						if ( $product->get_date_on_sale_from( 'edit' ) && $product->get_date_on_sale_from( 'edit' )->getTimestamp() && current_time( 'timestamp', true ) >= $product->get_date_on_sale_from( 'edit' )->getTimestamp() ) {
-							update_post_meta( $product_id, '_price', $product->get_sale_price( 'edit' ) );
-							$product->set_price( $product->get_sale_price( 'edit' ) );
-						}
-					}
-
-					if ( ! $product->is_in_stock() ) {
-						return;
-					}
-					if ( ! $product->get_date_on_sale_from( 'edit' ) && ! $product->get_date_on_sale_to( 'edit' ) ) {
-						return;
-					}
-
-					$id = $product->get_meta( '_woo_ctr_select_countdown_timer', true );
-
-					if ( $id !== '' ) {
-						$index = array_search( $id, $this->settings->get_id() );
-						if ( $index === false ) {
-							return;
-						}
-						if ( ! $this->settings->get_active()[ $index ] ) {
-							return;
-						}
-
-						$offset    = get_option( 'gmt_offset' );
-						$sale_from = ( $product->get_date_on_sale_from( 'edit' ) ) ? ( $product->get_date_on_sale_from( 'edit' )->getTimestamp() + $offset * 3600 ) : 0;
-						$sale_to   = ( $product->get_date_on_sale_to( 'edit' ) ) ? ( $product->get_date_on_sale_to( 'edit' )->getTimestamp() + $offset * 3600 ) : 0;
-
-						$sale_from_date = gmdate( 'Y-m-d', $sale_from );
-						$sale_to_date   = gmdate( 'Y-m-d', $sale_to );
-						$sale_from_time = $sale_from - strtotime( $sale_from_date );
-						$sale_to_time   = $sale_to - strtotime( $sale_to_date );
-						$sale_from_time = woo_ctr_time_revert( $sale_from_time );
-						$sale_to_time   = woo_ctr_time_revert( $sale_to_time );
-						//		    calculate sold quantity during campaign
-						$data                       = $product->get_meta( '_woo_ctr_product_sold_quantity', true ) ? ( $product->get_meta( '_woo_ctr_product_sold_quantity', true ) ) : array();
-						$order_status               = $this->settings->get_progress_bar_order_status()[ $index ] ? explode( ',', $this->settings->get_progress_bar_order_status()[ $index ] ) : array();
-						$progress_bar_message       = $this->settings->get_progress_bar_message()[ $index ];
-						$progress_bar_type          = $this->settings->get_progress_bar_type()[ $index ];
-						$progress_bar_real_quantity = $this->get_progress_bar_real_quantity( $data, $order_status );
-						$this->id                   = $id;
-						$this->index                = $index;
-						$this->position             = $this->settings->get_position()[ $index ];
-						$this->sale_from_date       = $sale_from_date;
-						$this->sale_from_time       = $sale_from_time;
-						$this->sale_to_date         = $sale_to_date;
-						$this->sale_to_time         = $sale_to_time;
-						$this->progress_bar_html    = $this->get_progress_bar_html( $product_id, $index, $progress_bar_real_quantity, $progress_bar_message, $progress_bar_type );
+		if ( ! is_product() || ! is_single() ) {
+			return;
+		}
+		global $post;
+		$product_id = $post->ID;
+		$product    = wc_get_product( $product_id );
+		if ( ! $product ) {
+			return;
+		}
+		if ( $product->is_type( 'variable' ) ) {
+			$variations = $product->get_children();
+			if ( is_array( $variations ) && count( $variations ) ) {
+				$this->is_ajax_variation = count( $variations ) > apply_filters( 'woocommerce_ajax_variation_threshold', 30, $product );
+				foreach ( $variations as $variation_id ) {
+					$variation = wc_get_product( $variation_id );
+					if ( $variation ) {
+						$this->maybe_correct_sale_schedule( $variation, $product_id );
 					}
 				}
 			}
+			return;
 		}
+
+		$this->maybe_correct_sale_schedule( $product );
+
+		if ( ! $product->get_sale_price( 'edit' ) ) {
+			return;
+		}
+		if ( ! $product->is_in_stock() ) {
+			return;
+		}
+		if ( ! $product->get_date_on_sale_from( 'edit' ) && ! $product->get_date_on_sale_to( 'edit' ) ) {
+			return;
+		}
+
+		$id = $product->get_meta( '_woo_ctr_select_countdown_timer', true );
+		if ( $id === '' ) {
+			return;
+		}
+		$index = array_search( $id, $this->settings->get_id() );
+		if ( $index === false ) {
+			return;
+		}
+		if ( ! $this->settings->get_active()[ $index ] ) {
+			return;
+		}
+
+		$offset         = get_option( 'gmt_offset' );
+		$sale_from      = ( $product->get_date_on_sale_from( 'edit' ) ) ? ( $product->get_date_on_sale_from( 'edit' )->getTimestamp() + $offset * 3600 ) : 0;
+		$sale_to        = ( $product->get_date_on_sale_to( 'edit' ) ) ? ( $product->get_date_on_sale_to( 'edit' )->getTimestamp() + $offset * 3600 ) : 0;
+		$sale_from_date = gmdate( 'Y-m-d', $sale_from );
+		$sale_to_date   = gmdate( 'Y-m-d', $sale_to );
+		$sale_from_time = woo_ctr_time_revert( $sale_from - strtotime( $sale_from_date ) );
+		$sale_to_time   = woo_ctr_time_revert( $sale_to - strtotime( $sale_to_date ) );
+		$data                       = $product->get_meta( '_woo_ctr_product_sold_quantity', true ) ? ( $product->get_meta( '_woo_ctr_product_sold_quantity', true ) ) : array();
+		$order_status               = $this->settings->get_progress_bar_order_status()[ $index ] ? explode( ',', $this->settings->get_progress_bar_order_status()[ $index ] ) : array();
+		$progress_bar_message       = $this->settings->get_progress_bar_message()[ $index ];
+		$progress_bar_type          = $this->settings->get_progress_bar_type()[ $index ];
+		$progress_bar_real_quantity = $this->get_progress_bar_real_quantity( $data, $order_status );
+		$this->id                   = $id;
+		$this->index                = $index;
+		$this->position             = $this->settings->get_position()[ $index ];
+		$this->sale_from_date       = $sale_from_date;
+		$this->sale_from_time       = $sale_from_time;
+		$this->sale_to_date         = $sale_to_date;
+		$this->sale_to_time         = $sale_to_time;
+		$this->progress_bar_html    = $this->get_progress_bar_html( $product_id, $index, $progress_bar_real_quantity, $progress_bar_message, $progress_bar_type );
 	}
 
 	public function wp_enqueue_scripts() {
@@ -274,10 +269,10 @@ class SALES_COUNTDOWN_TIMER_Frontend_Single_Product {
 	}
 
 	public function get_progress_bar_html( $product_id, $index, $progress_bar_real_quantity, $progress_bar_message, $progress_bar_type ) {
-		$wc_product                 = wc_get_product( $product_id );
-		if ( ! $wc_product->is_on_sale() ) {
-		    return '';
-        }
+		$wc_product = wc_get_product( $product_id );
+		if ( ! $wc_product || ! $wc_product->is_on_sale() ) {
+			return '';
+		}
 		$progress_bar               = $wc_product->get_meta( '_woo_ctr_enable_progress_bar', true );
 		$progress_bar_goal          = (int) $wc_product->get_meta( '_woo_ctr_progress_bar_goal', true );
 		$progress_bar_initial       = (int) $wc_product->get_meta( '_woo_ctr_progress_bar_initial', true );
@@ -347,14 +342,22 @@ class SALES_COUNTDOWN_TIMER_Frontend_Single_Product {
 	}
 
 	public function get_progress_bar_real_quantity( $data, $order_status ) {
+		static $order_status_cache = array();
 		$progress_bar_real_quantity = 0;
 		if ( is_array( $order_status ) && empty( $order_status ) ) {
 			$order_status = array_keys( wc_get_order_statuses() );
 		}
 		if ( is_array( $data ) && count( $data ) && is_array( $order_status ) && count( $order_status ) ) {
-			foreach ( $data as $key => $value ) {
-				$order = wc_get_order( intval( $value['id'] ) );
-				if ( $order && in_array( 'wc-' . $order->get_status(), $order_status ) ) {
+			foreach ( $data as $value ) {
+				$order_id = isset( $value['id'] ) ? intval( $value['id'] ) : 0;
+				if ( ! $order_id ) {
+					continue;
+				}
+				if ( ! array_key_exists( $order_id, $order_status_cache ) ) {
+					$order = wc_get_order( $order_id );
+					$order_status_cache[ $order_id ] = $order ? 'wc-' . $order->get_status() : '';
+				}
+				if ( $order_status_cache[ $order_id ] && in_array( $order_status_cache[ $order_id ], $order_status, true ) ) {
 					$progress_bar_real_quantity += $value['quantity'];
 				}
 			}

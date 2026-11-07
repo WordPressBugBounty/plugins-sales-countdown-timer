@@ -1,7 +1,8 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-} // Exit if accessed directly
+}
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals -- Intentional SALES_COUNTDOWN_TIMER_ / visct_ prefixes and Elementor widget class.
 
 class SALES_COUNTDOWN_TIMER_Elementor_Widget extends Elementor\Widget_Base {
 
@@ -139,12 +140,20 @@ class SALES_COUNTDOWN_TIMER_Elementor_Widget extends Elementor\Widget_Base {
 		$sale_from_date = $sale_from[0] ?? '';
 		$sale_from_time = $sale_from[1] ?? '';
 		$sale_to        = $settings['sale_to'] ?? '';
-		$sale_to        = $sale_from ? explode( ' ', $sale_to ) : array();
+		$sale_to        = $sale_to ? explode( ' ', $sale_to ) : array();
 		$sale_to_date   = $sale_to[0] ?? '';
 		$sale_to_time   = $sale_to[1] ?? '';
-		$shortcode      = "[sales_countdown_timer id='{$settings['profile_id']}' active='1'
-		 sale_from_date='{$sale_from_date}' sale_from_time='{$sale_from_time}' sale_to_date='{$sale_to_date}' sale_to_time='{$sale_to_time}' 
-		 message='{$settings['message']}' time_separator='{$settings['time_separator']}' datetime_format='{$settings['datetime_format']}']";
+		$shortcode      = sprintf(
+			'[sales_countdown_timer id="%1$s" active="1" sale_from_date="%2$s" sale_from_time="%3$s" sale_to_date="%4$s" sale_to_time="%5$s" message="%6$s" time_separator="%7$s" datetime_format="%8$s"]',
+			esc_attr( $settings['profile_id'] ?? '' ),
+			esc_attr( $sale_from_date ),
+			esc_attr( $sale_from_time ),
+			esc_attr( $sale_to_date ),
+			esc_attr( $sale_to_time ),
+			esc_attr( $settings['message'] ?? '' ),
+			esc_attr( $settings['time_separator'] ?? '' ),
+			esc_attr( $settings['datetime_format'] ?? '' )
+		);
 
 		return $shortcode;
 	}

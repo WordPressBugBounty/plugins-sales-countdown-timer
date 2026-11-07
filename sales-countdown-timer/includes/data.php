@@ -2,6 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals -- Intentional SALES_COUNTDOWN_TIMER_ / woo_ctr_ / woo_sctr_ / sctv_ prefixes.
 
 class SALES_COUNTDOWN_TIMER_Data {
 	private $params, $default;
@@ -171,14 +172,6 @@ class SALES_COUNTDOWN_TIMER_Data {
 		return apply_filters( 'woo_ctr_get_progress_bar_position', $this->params['progress_bar_position'] );
 	}
 
-	public function get_progress_bar_initial() {
-		return apply_filters( 'woo_ctr_get_progress_bar_initial', $this->params['progress_bar_initial'] );
-	}
-
-	public function get_progress_bar_max() {
-		return apply_filters( 'woo_ctr_get_progress_bar_max', $this->params['progress_bar_max'] );
-	}
-
 	public function get_progress_bar_style() {
 		return apply_filters( 'woo_ctr_get_progress_bar_style', $this->params['progress_bar_style'] );
 	}
@@ -331,91 +324,104 @@ class SALES_COUNTDOWN_TIMER_Data {
 		if ( is_array( $id ) && count( $id ) ) {
 
 			for ( $i = 0; $i < count( $id ); $i ++ ) {
-				if ( $this->get_datetime_value_bg_color()[ $i ] ) {
-					$css .= '.woo-sctr-accordion-wrap[data-accordion_id="' . $i . '"] .woo-sctr-shortcode-countdown-style-4 .woo-sctr-shortcode-countdown-1 .woo-sctr-progress-circle:after{' . esc_attr__( 'background:' ) . $this->get_datetime_value_bg_color()[ $i ] . ';}';
+				$id_class = woo_ctr_sanitize_html_class( $id[ $i ] );
+				if ( '' === $id_class ) {
+					continue;
 				}
-				if ( $this->get_countdown_timer_item_border_color()[ $i ] ) {
-					$css .= '.woo-sctr-shortcode-wrap-wrap-' . $id[$i] . ' .woo-sctr-shortcode-countdown-style-4 .woo-sctr-shortcode-countdown-1 .woo-sctr-progress-circle .woo-sctr-value-bar{' . esc_attr__( 'border-color: ' ) . $this->get_countdown_timer_item_border_color()[ $i ] . ';}';
-					$css .= '.woo-sctr-shortcode-wrap-wrap-' . $id[$i] . ' .woo-sctr-shortcode-countdown-style-4 .woo-sctr-shortcode-countdown-1 .woo-sctr-progress-circle .woo-sctr-first50-bar{' . esc_attr__( 'background-color: ' ) . $this->get_countdown_timer_item_border_color()[ $i ] . ';}';
+				$datetime_value_bg_color           = woo_ctr_sanitize_css_color( $this->get_datetime_value_bg_color()[ $i ] ?? '' );
+				$countdown_timer_item_border_color = woo_ctr_sanitize_css_color( $this->get_countdown_timer_item_border_color()[ $i ] ?? '' );
+				$countdown_timer_color             = woo_ctr_sanitize_css_color( $this->get_countdown_timer_color()[ $i ] ?? '' );
+				$countdown_timer_bg_color          = woo_ctr_sanitize_css_color( $this->get_countdown_timer_bg_color()[ $i ] ?? '' );
+				$countdown_timer_border_color      = woo_ctr_sanitize_css_color( $this->get_countdown_timer_border_color()[ $i ] ?? '' );
+				$datetime_value_color              = woo_ctr_sanitize_css_color( $this->get_datetime_value_color()[ $i ] ?? '' );
+				$datetime_unit_color               = woo_ctr_sanitize_css_color( $this->get_datetime_unit_color()[ $i ] ?? '' );
+				$datetime_unit_bg_color            = woo_ctr_sanitize_css_color( $this->get_datetime_unit_bg_color()[ $i ] ?? '' );
+
+				if ( $datetime_value_bg_color ) {
+					$css .= '.woo-sctr-accordion-wrap[data-accordion_id="' . esc_attr( (string) $i ) . '"] .woo-sctr-shortcode-countdown-style-4 .woo-sctr-shortcode-countdown-1 .woo-sctr-progress-circle:after{background:' . esc_attr( $datetime_value_bg_color ) . ';}';
 				}
-				if ( $this->get_datetime_value_font_size()[ $i ] ) {
-					$css .= '.woo-sctr-shortcode-wrap-wrap-' . $id[$i] . ' .woo-sctr-shortcode-countdown-style-4 .woo-sctr-shortcode-countdown-1 .woo-sctr-progress-circle{' . esc_attr__( 'font-size:' ) . $this->get_datetime_value_font_size()[ $i ] . 'px;}';
+				if ( $countdown_timer_item_border_color ) {
+					$css .= '.woo-sctr-shortcode-wrap-wrap-' . $id_class . ' .woo-sctr-shortcode-countdown-style-4 .woo-sctr-shortcode-countdown-1 .woo-sctr-progress-circle .woo-sctr-value-bar{border-color: ' . esc_attr( $countdown_timer_item_border_color ) . ';}';
+					$css .= '.woo-sctr-shortcode-wrap-wrap-' . $id_class . ' .woo-sctr-shortcode-countdown-style-4 .woo-sctr-shortcode-countdown-1 .woo-sctr-progress-circle .woo-sctr-first50-bar{background-color: ' . esc_attr( $countdown_timer_item_border_color ) . ';}';
+				}
+				if ( ! empty( $this->get_datetime_value_font_size()[ $i ] ) ) {
+					$css .= '.woo-sctr-shortcode-wrap-wrap-' . $id_class . ' .woo-sctr-shortcode-countdown-style-4 .woo-sctr-shortcode-countdown-1 .woo-sctr-progress-circle{font-size:' . esc_attr( $this->get_datetime_value_font_size()[ $i ] ) . 'px;}';
 				}
 
-				$css .= '.woo-sctr-shortcode-wrap-wrap-' . $id[$i] . ' .woo-sctr-shortcode-wrap-wrap:not(.woo-sctr-shortcode-wrap-wrap-inline) .woo-sctr-shortcode-countdown-1{';
-				if ( $this->get_countdown_timer_color()[ $i ] ) {
-					$css .= esc_attr__( 'color:' ) . $this->get_countdown_timer_color()[ $i ] . ';';
+				$css .= '.woo-sctr-shortcode-wrap-wrap-' . $id_class . ' .woo-sctr-shortcode-wrap-wrap:not(.woo-sctr-shortcode-wrap-wrap-inline) .woo-sctr-shortcode-countdown-1{';
+				if ( $countdown_timer_color ) {
+					$css .= 'color:' . esc_attr( $countdown_timer_color ) . ';';
 				}
-				if ( $this->get_countdown_timer_bg_color()[ $i ] ) {
-					$css .= esc_html__( 'background:' ) . $this->get_countdown_timer_bg_color()[ $i ] . ';';
+				if ( $countdown_timer_bg_color ) {
+					$css .= 'background:' . esc_attr( $countdown_timer_bg_color ) . ';';
 				}
-				if ( $this->get_countdown_timer_padding()[ $i ] ) {
-					$css .= esc_html__( 'padding:' ) . $this->get_countdown_timer_padding()[ $i ] . 'px;';
+				if ( ! empty( $this->get_countdown_timer_padding()[ $i ] ) ) {
+					$css .= 'padding:' . esc_attr( $this->get_countdown_timer_padding()[ $i ] ) . 'px;';
 				}
-				if ( $this->get_countdown_timer_border_radius()[ $i ] ) {
-					$css .= esc_html__( 'border-radius:' ) . $this->get_countdown_timer_border_radius()[ $i ] . 'px;';
+				if ( ! empty( $this->get_countdown_timer_border_radius()[ $i ] ) ) {
+					$css .= 'border-radius:' . esc_attr( $this->get_countdown_timer_border_radius()[ $i ] ) . 'px;';
 				}
-				if ( $this->get_countdown_timer_border_color()[ $i ] ) {
-					$css .= esc_html__( 'border: 1px solid ' ) . $this->get_countdown_timer_border_color()[ $i ] . ';';
+				if ( $countdown_timer_border_color ) {
+					$css .= 'border: 1px solid ' . esc_attr( $countdown_timer_border_color ) . ';';
 				}
 				$css .= '}';
 
-				$css .= '.woo-sctr-shortcode-wrap-wrap-' . $id[$i] . ' .woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-inline{';
-				if ( $this->get_countdown_timer_color()[ $i ] ) {
-					$css .= esc_attr__( 'color:' ) . $this->get_countdown_timer_color()[ $i ] . ';';
+				$css .= '.woo-sctr-shortcode-wrap-wrap-' . $id_class . ' .woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-inline{';
+				if ( $countdown_timer_color ) {
+					$css .= 'color:' . esc_attr( $countdown_timer_color ) . ';';
 				}
-				if ( $this->get_countdown_timer_bg_color()[ $i ] ) {
-					$css .= esc_html__( 'background:' ) . $this->get_countdown_timer_bg_color()[ $i ] . ';';
+				if ( $countdown_timer_bg_color ) {
+					$css .= 'background:' . esc_attr( $countdown_timer_bg_color ) . ';';
 				}
-				if ( $this->get_countdown_timer_padding()[ $i ] ) {
-					$css .= esc_html__( 'padding:' ) . $this->get_countdown_timer_padding()[ $i ] . 'px;';
+				if ( ! empty( $this->get_countdown_timer_padding()[ $i ] ) ) {
+					$css .= 'padding:' . esc_attr( $this->get_countdown_timer_padding()[ $i ] ) . 'px;';
 				}
-				if ( $this->get_countdown_timer_border_radius()[ $i ] ) {
-					$css .= esc_html__( 'border-radius:' ) . $this->get_countdown_timer_border_radius()[ $i ] . 'px;';
+				if ( ! empty( $this->get_countdown_timer_border_radius()[ $i ] ) ) {
+					$css .= 'border-radius:' . esc_attr( $this->get_countdown_timer_border_radius()[ $i ] ) . 'px;';
 				}
-				if ( $this->get_countdown_timer_border_color()[ $i ] ) {
-					$css .= esc_html__( 'border: 1px solid ' ) . $this->get_countdown_timer_border_color()[ $i ] . ';';
+				if ( $countdown_timer_border_color ) {
+					$css .= 'border: 1px solid ' . esc_attr( $countdown_timer_border_color ) . ';';
 				}
 				$css .= '}';
 
-				$css .= '.woo-sctr-shortcode-wrap-wrap-' . $id[$i] . ' .woo-sctr-shortcode-wrap-wrap .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-value{';
-				if ( $this->get_datetime_value_color()[ $i ] ) {
-					$css .= esc_attr__( 'color:' ) . $this->get_datetime_value_color()[ $i ] . ';';
+				$css .= '.woo-sctr-shortcode-wrap-wrap-' . $id_class . ' .woo-sctr-shortcode-wrap-wrap .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-value{';
+				if ( $datetime_value_color ) {
+					$css .= 'color:' . esc_attr( $datetime_value_color ) . ';';
 				}
-				if ( $this->get_datetime_value_bg_color()[ $i ] ) {
-					$css .= esc_attr__( 'background:' ) . $this->get_datetime_value_bg_color()[ $i ] . ';';
+				if ( $datetime_value_bg_color ) {
+					$css .= 'background:' . esc_attr( $datetime_value_bg_color ) . ';';
 				}
-				if ( $this->get_datetime_value_font_size()[ $i ] ) {
-					$css .= esc_attr__( 'font-size:' ) . $this->get_datetime_value_font_size()[ $i ] . 'px;';
+				if ( ! empty( $this->get_datetime_value_font_size()[ $i ] ) ) {
+					$css .= 'font-size:' . esc_attr( $this->get_datetime_value_font_size()[ $i ] ) . 'px;';
 				}
 				$css .= '}';
-				$css .= '.woo-sctr-shortcode-wrap-wrap-' . $id[$i] . ' .woo-sctr-shortcode-wrap-wrap .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-text{';
-				if ( $this->get_datetime_unit_color()[ $i ] ) {
-					$css .= esc_attr__( 'color:' ) . $this->get_datetime_unit_color()[ $i ] . ';';
+				$css .= '.woo-sctr-shortcode-wrap-wrap-' . $id_class . ' .woo-sctr-shortcode-wrap-wrap .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-text{';
+				if ( $datetime_unit_color ) {
+					$css .= 'color:' . esc_attr( $datetime_unit_color ) . ';';
 				}
-				if ( $this->get_datetime_unit_bg_color()[ $i ] ) {
-					$css .= esc_attr__( 'background:' ) . $this->get_datetime_unit_bg_color()[ $i ] . ';';
+				if ( $datetime_unit_bg_color ) {
+					$css .= 'background:' . esc_attr( $datetime_unit_bg_color ) . ';';
 				}
-				if ( $this->get_datetime_unit_font_size()[ $i ] ) {
-					$css .= esc_attr__( 'font-size:' ) . $this->get_datetime_unit_font_size()[ $i ] . 'px;';
+				if ( ! empty( $this->get_datetime_unit_font_size()[ $i ] ) ) {
+					$css .= 'font-size:' . esc_attr( $this->get_datetime_unit_font_size()[ $i ] ) . 'px;';
 				}
 				$css .= '}';
 
 				$css1 = '';
-				if ( $this->get_countdown_timer_item_height()[ $i ] ) {
-					$css1 .= esc_html__( 'height:' ) . $this->get_countdown_timer_item_height()[ $i ] . 'px;';
+				if ( ! empty( $this->get_countdown_timer_item_height()[ $i ] ) ) {
+					$css1 .= 'height:' . esc_attr( $this->get_countdown_timer_item_height()[ $i ] ) . 'px;';
 				}
-				if ( $this->get_countdown_timer_item_width()[ $i ] ) {
-					$css1 .= esc_html__( 'width:' ) . $this->get_countdown_timer_item_width()[ $i ] . 'px;';
+				if ( ! empty( $this->get_countdown_timer_item_width()[ $i ] ) ) {
+					$css1 .= 'width:' . esc_attr( $this->get_countdown_timer_item_width()[ $i ] ) . 'px;';
 				}
-				if ( $this->get_countdown_timer_item_border_radius()[ $i ] ) {
-					$css1 .= esc_html__( 'border-radius:' ) . $this->get_countdown_timer_item_border_radius()[ $i ] . 'px;';
+				if ( ! empty( $this->get_countdown_timer_item_border_radius()[ $i ] ) ) {
+					$css1 .= 'border-radius:' . esc_attr( $this->get_countdown_timer_item_border_radius()[ $i ] ) . 'px;';
 				}
-				if ( $this->get_countdown_timer_item_border_color()[ $i ] ) {
-					$css1 .= esc_html__( 'border:1px solid ' ) . $this->get_countdown_timer_item_border_color()[ $i ] . ';';
+				if ( $countdown_timer_item_border_color ) {
+					$css1 .= 'border:1px solid ' . esc_attr( $countdown_timer_item_border_color ) . ';';
 				}
 				if ( $css1 ) {
-					$css .= '.woo-sctr-shortcode-wrap-wrap-' . $id[$i] . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-1 .woo-sctr-shortcode-countdown-unit,.woo-sctr-shortcode-wrap-wrap-' . $id[$i] . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-2 .woo-sctr-shortcode-countdown-value{' . $css1 . '}';
+					$css .= '.woo-sctr-shortcode-wrap-wrap-' . $id_class . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-1 .woo-sctr-shortcode-countdown-unit,.woo-sctr-shortcode-wrap-wrap-' . $id_class . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-2 .woo-sctr-shortcode-countdown-value{' . $css1 . '}';
 				}
 
 			}

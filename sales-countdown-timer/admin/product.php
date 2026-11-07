@@ -9,10 +9,11 @@ Copyright 2017 villatheme.com. All rights reserved.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals -- Intentional SALES_COUNTDOWN_TIMER_ / woo_ctr_ prefixes and WooCommerce hooks.
+// phpcs:disable WordPress.Security.NonceVerification -- WooCommerce product save hooks already verify woocommerce_meta_nonce.
 
 class SALES_COUNTDOWN_TIMER_Admin_Product {
 	protected $settings;
-	protected $data;
 
 	function __construct() {
 		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
@@ -55,128 +56,9 @@ class SALES_COUNTDOWN_TIMER_Admin_Product {
 	public function admin_enqueue_scripts() {
 		$screen = get_current_screen();
 		$suffix = WP_DEBUG ? '' : '.min';
-		if ( $screen->id == 'product' ) {
+		if ( $screen && 'product' === $screen->id ) {
 			wp_enqueue_script( 'sales-countdown-timer-admin-product', SALES_COUNTDOWN_TIMER_JS . 'sales-countdown-timer-admin-product' . $suffix . '.js', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
-			wp_enqueue_style( 'sales-countdown-timer-admin-product', SALES_COUNTDOWN_TIMER_CSS . 'sales-countdown-timer-admin-product' . $suffix . '.css', [], SALES_COUNTDOWN_TIMER_VERSION );
-			/*update price*/
-//			global $post;
-//			$product_id = $post->ID;
-//			$product    = wc_get_product( $product_id );
-//			if ( $product ) {
-//				if ( $product->is_type( 'variable' ) ) {
-//					$variations = $product->get_children();
-//					if ( is_array( $variations ) && count( $variations ) ) {
-//						foreach ( $variations as $variation_key => $variation_id ) {
-//							$variation = wc_get_product( $variation_id );
-//							if ( $variation ) {
-//								if ( ! $variation->get_sale_price( 'edit' ) ) {
-//									continue;
-//								}
-//								if ( $variation->get_regular_price( 'edit' ) != $variation->get_price( 'edit' ) ) {
-//									if ( $variation->get_date_on_sale_from( 'edit' ) && $variation->get_date_on_sale_from( 'edit' )->getTimestamp() && current_time( 'timestamp', true ) < $variation->get_date_on_sale_from( 'edit' )->getTimestamp() ) {
-//										update_post_meta( $variation_id, '_price', $variation->get_regular_price( 'edit' ) );
-//										$variation->set_price( $variation->get_regular_price( 'edit' ) );
-//									}
-//								}
-//								if ( $variation->get_date_on_sale_to( 'edit' ) && $variation->get_date_on_sale_to( 'edit' )->getTimestamp() && current_time( 'timestamp', true ) > $variation->get_date_on_sale_to( 'edit' )->getTimestamp() ) {
-//									update_post_meta( $variation_id, '_sale_price_old_woo_ctr', $variation->get_sale_price( 'edit' ) );
-//									$regular_price = $variation->get_regular_price();
-//									$variation->set_price( $regular_price );
-//									$variation->set_sale_price( '' );
-//									$variation->set_date_on_sale_to( '' );
-//									$variation->set_date_on_sale_from( '' );
-//									$variation->save();
-//									delete_post_meta( $variation_id, '_woo_ctr_product_sold_quantity' );
-//								}
-//							}
-//						}
-//					}
-//
-//				} else {
-//					if ( ! $product->get_sale_price( 'edit' ) ) {
-//						return;
-//					}
-//					if ( $product->get_regular_price( 'edit' ) != $product->get_price( 'edit' ) ) {
-//						if ( $product->get_date_on_sale_from( 'edit' ) && $product->get_date_on_sale_from( 'edit' )->getTimestamp() && current_time( 'timestamp', true ) < $product->get_date_on_sale_from( 'edit' )->getTimestamp() ) {
-//							update_post_meta( $product_id, '_price', $product->get_regular_price( 'edit' ) );
-//							$product->set_price( $product->get_regular_price( 'edit' ) );
-//						}
-//					}
-//					if ( $product->get_date_on_sale_to( 'edit' ) && $product->get_date_on_sale_to( 'edit' )->getTimestamp() && current_time( 'timestamp', true ) > $product->get_date_on_sale_to( 'edit' )->getTimestamp() ) {
-//						update_post_meta( $product_id, '_sale_price_old_woo_ctr', $product->get_sale_price( 'edit' ) );
-//						$regular_price = $product->get_regular_price();
-//						$product->set_price( $regular_price );
-//						$product->set_sale_price( '' );
-//						$product->set_date_on_sale_to( '' );
-//						$product->set_date_on_sale_from( '' );
-//						$product->save();
-//						delete_post_meta( $product_id, '_woo_ctr_product_sold_quantity' );
-//					}
-//				}
-//			}
-		} elseif ( $screen->id == 'edit-product' ) {
-			/*update price*/
-			global $wp_query;
-			$products = $wp_query->get_posts();
-			if ( count( $products ) ) {
-				foreach ( $products as $product_obj ) {
-					$product_id = $product_obj->ID;
-					$product    = wc_get_product( $product_id );
-					if ( $product ) {
-						if ( $product->is_type( 'variable' ) ) {
-							$variations = $product->get_children();
-							if ( is_array( $variations ) && count( $variations ) ) {
-								foreach ( $variations as $variation_key => $variation_id ) {
-									$variation = wc_get_product( $variation_id );
-									if ( $variation ) {
-										if ( ! $variation->get_sale_price( 'edit' ) ) {
-											continue;
-										}
-										if ( $variation->get_regular_price( 'edit' ) != $variation->get_price( 'edit' ) ) {
-											if ( $variation->get_date_on_sale_from( 'edit' ) && $variation->get_date_on_sale_from( 'edit' )->getTimestamp() && current_time( 'timestamp', true ) < $variation->get_date_on_sale_from( 'edit' )->getTimestamp() ) {
-												update_post_meta( $variation_id, '_price', $variation->get_regular_price( 'edit' ) );
-												$variation->set_price( $variation->get_regular_price( 'edit' ) );
-											}
-										}
-										if ( $variation->get_date_on_sale_to( 'edit' ) && $variation->get_date_on_sale_to( 'edit' )->getTimestamp() && current_time( 'timestamp', true ) > $variation->get_date_on_sale_to( 'edit' )->getTimestamp() ) {
-											update_post_meta( $variation_id, '_sale_price_old_woo_ctr', $variation->get_sale_price( 'edit' ) );
-											$regular_price = $variation->get_regular_price();
-											$variation->set_price( $regular_price );
-											$variation->set_sale_price( '' );
-											$variation->set_date_on_sale_to( '' );
-											$variation->set_date_on_sale_from( '' );
-											$variation->save();
-											delete_post_meta( $variation_id, '_woo_ctr_product_sold_quantity' );
-										}
-									}
-								}
-							}
-
-						} else {
-							if ( ! $product->get_sale_price( 'edit' ) ) {
-								continue;
-							}
-							if ( $product->get_regular_price( 'edit' ) != $product->get_price( 'edit' ) ) {
-								if ( $product->get_date_on_sale_from( 'edit' ) && $product->get_date_on_sale_from( 'edit' )->getTimestamp() && current_time( 'timestamp', true ) < $product->get_date_on_sale_from( 'edit' )->getTimestamp() ) {
-									update_post_meta( $product_id, '_price', $product->get_regular_price( 'edit' ) );
-									$product->set_price( $product->get_regular_price( 'edit' ) );
-								}
-							}
-							if ( $product->get_date_on_sale_to( 'edit' ) && $product->get_date_on_sale_to( 'edit' )->getTimestamp() && current_time( 'timestamp', true ) > $product->get_date_on_sale_to( 'edit' )->getTimestamp() ) {
-								update_post_meta( $product_id, '_sale_price_old_woo_ctr', $product->get_sale_price( 'edit' ) );
-								$regular_price = $product->get_regular_price();
-								$product->set_price( $regular_price );
-								$product->set_sale_price( '' );
-								$product->set_date_on_sale_to( '' );
-								$product->set_date_on_sale_from( '' );
-								$product->save();
-								delete_post_meta( $product_id, '_woo_ctr_product_sold_quantity' );
-							}
-						}
-					}
-
-				}
-			}
+			wp_enqueue_style( 'sales-countdown-timer-admin-product', SALES_COUNTDOWN_TIMER_CSS . 'sales-countdown-timer-admin-product' . $suffix . '.css', array(), SALES_COUNTDOWN_TIMER_VERSION );
 		}
 	}
 
@@ -294,66 +176,60 @@ class SALES_COUNTDOWN_TIMER_Admin_Product {
 	}
 
 	public function woocommerce_process_product_meta_simple( $post_id ) {
-		if ( isset( $_REQUEST['_woo_ctr_admin_nonce'] ) && ! wp_verify_nonce( wc_clean( wp_unslash( $_REQUEST['_woo_ctr_admin_nonce'] ) ), 'woo_ctr_admin_nonce' ) ) {
-			return;
-		}
 		$gmt_offset            = get_option( 'gmt_offset' );
-		$date_on_sale_from     = isset( $_POST['_sale_price_dates_from'] ) ? strtotime( sanitize_text_field( $_POST['_sale_price_dates_from'] ) ) : '';
-		$date_on_sale_to       = isset( $_POST['_sale_price_dates_to'] ) ? strtotime( sanitize_text_field( $_POST['_sale_price_dates_to'] ) ) : '';
-		$sale_price_times_from = isset( $_POST['_sale_price_times_from'] ) ? woo_ctr_time( sanitize_text_field( $_POST['_sale_price_times_from'] ) ) : '';
-		$sale_price_times_to   = isset( $_POST['_sale_price_times_to'] ) ? woo_ctr_time( sanitize_text_field( $_POST['_sale_price_times_to'] ) ) : '';
+		$date_on_sale_from     = isset( $_POST['_sale_price_dates_from'] ) ? strtotime( sanitize_text_field( wp_unslash( $_POST['_sale_price_dates_from'] ) ) ) : '';
+		$date_on_sale_to       = isset( $_POST['_sale_price_dates_to'] ) ? strtotime( sanitize_text_field( wp_unslash( $_POST['_sale_price_dates_to'] ) ) ) : '';
+		$sale_price_times_from = isset( $_POST['_sale_price_times_from'] ) ? woo_ctr_time( sanitize_text_field( wp_unslash( $_POST['_sale_price_times_from'] ) ) ) : '';
+		$sale_price_times_to   = isset( $_POST['_sale_price_times_to'] ) ? woo_ctr_time( sanitize_text_field( wp_unslash( $_POST['_sale_price_times_to'] ) ) ) : '';
 		if ( $date_on_sale_from ) {
 			$date_on_sale_from += $sale_price_times_from;
 		} elseif ( $date_on_sale_to ) {
-			$date_on_sale_from = strtotime( gmdate( "Y-m-d" ) );
+			$date_on_sale_from = strtotime( gmdate( 'Y-m-d' ) );
 		}
 		if ( $date_on_sale_to ) {
 			$date_on_sale_to += $sale_price_times_to;
 		}
 		update_post_meta( $post_id, '_sale_price_dates_from', ( $date_on_sale_from - $gmt_offset * 3600 ) > 0 ? ( $date_on_sale_from - $gmt_offset * 3600 ) : '' );
 		update_post_meta( $post_id, '_sale_price_dates_to', ( $date_on_sale_to - $gmt_offset * 3600 ) > 0 ? ( $date_on_sale_to - $gmt_offset * 3600 ) : '' );
-		update_post_meta( $post_id, '_sale_price_times_from', isset( $_POST['_sale_price_times_from'] ) ? sanitize_text_field( $_POST['_sale_price_times_from'] ) : '00:00' );
-		update_post_meta( $post_id, '_sale_price_times_to', isset( $_POST['_sale_price_times_to'] ) ? sanitize_text_field( $_POST['_sale_price_times_to'] ) : '00:00' );
-		update_post_meta( $post_id, '_woo_ctr_select_countdown_timer', isset( $_POST['_woo_ctr_select_countdown_timer'] ) ? sanitize_text_field( $_POST['_woo_ctr_select_countdown_timer'] ) : '' );
-		update_post_meta( $post_id, '_woo_ctr_enable_progress_bar', isset( $_POST['_woo_ctr_enable_progress_bar'] ) ? sanitize_text_field( $_POST['_woo_ctr_enable_progress_bar'] ) : '' );
-		update_post_meta( $post_id, '_woo_ctr_progress_bar_goal', isset( $_POST['_woo_ctr_progress_bar_goal'] ) ? sanitize_text_field( $_POST['_woo_ctr_progress_bar_goal'] ) : '' );
-		update_post_meta( $post_id, '_woo_ctr_progress_bar_initial', isset( $_POST['_woo_ctr_progress_bar_initial'] ) ? sanitize_text_field( $_POST['_woo_ctr_progress_bar_initial'] ) : '' );
+		update_post_meta( $post_id, '_sale_price_times_from', isset( $_POST['_sale_price_times_from'] ) ? sanitize_text_field( wp_unslash( $_POST['_sale_price_times_from'] ) ) : '00:00' );
+		update_post_meta( $post_id, '_sale_price_times_to', isset( $_POST['_sale_price_times_to'] ) ? sanitize_text_field( wp_unslash( $_POST['_sale_price_times_to'] ) ) : '00:00' );
+		update_post_meta( $post_id, '_woo_ctr_select_countdown_timer', isset( $_POST['_woo_ctr_select_countdown_timer'] ) ? sanitize_text_field( wp_unslash( $_POST['_woo_ctr_select_countdown_timer'] ) ) : '' );
+		update_post_meta( $post_id, '_woo_ctr_enable_progress_bar', isset( $_POST['_woo_ctr_enable_progress_bar'] ) ? sanitize_text_field( wp_unslash( $_POST['_woo_ctr_enable_progress_bar'] ) ) : '' );
+		update_post_meta( $post_id, '_woo_ctr_progress_bar_goal', isset( $_POST['_woo_ctr_progress_bar_goal'] ) ? sanitize_text_field( wp_unslash( $_POST['_woo_ctr_progress_bar_goal'] ) ) : '' );
+		update_post_meta( $post_id, '_woo_ctr_progress_bar_initial', isset( $_POST['_woo_ctr_progress_bar_initial'] ) ? sanitize_text_field( wp_unslash( $_POST['_woo_ctr_progress_bar_initial'] ) ) : '' );
 	}
 
 	public function woocommerce_save_product_variation( $variation_id, $i ) {
-		if ( isset( $_REQUEST['_woo_ctr_admin_nonce'] ) && ! wp_verify_nonce( wc_clean( wp_unslash( $_REQUEST['_woo_ctr_admin_nonce'] ) ), 'woo_ctr_admin_nonce' ) ) {
-			return;
-		}
-		global $post;
-		update_post_meta( $variation_id, '_woo_ctr_select_countdown_timer', isset( $_POST['_woo_ctr_select_countdown_timer'][ $i ] ) ? sanitize_text_field( $_POST['_woo_ctr_select_countdown_timer'][ $i ] ) : '' );
+		update_post_meta( $variation_id, '_woo_ctr_select_countdown_timer', isset( $_POST['_woo_ctr_select_countdown_timer'][ $i ] ) ? sanitize_text_field( wp_unslash( $_POST['_woo_ctr_select_countdown_timer'][ $i ] ) ) : '' );
 		$gmt_offset            = get_option( 'gmt_offset' );
-		$date_on_sale_from     = isset( $_POST['variable_sale_price_dates_from'][ $i ] ) ? strtotime( sanitize_text_field( $_POST['variable_sale_price_dates_from'][ $i ] ) ) : '';
-		$date_on_sale_to       = isset( $_POST['variable_sale_price_dates_to'][ $i ] ) ? strtotime( sanitize_text_field( $_POST['variable_sale_price_dates_to'][ $i ] ) ) : '';
-		$sale_price_times_from = isset( $_POST['variable_sale_price_times_from'][ $i ] ) ? sanitize_text_field( $_POST['variable_sale_price_times_from'][ $i ] ) : '00:00';
-		$sale_price_times_to   = isset( $_POST['variable_sale_price_times_to'][ $i ] ) ? sanitize_text_field( $_POST['variable_sale_price_times_to'][ $i ] ) : '00:00';
+		$date_on_sale_from     = isset( $_POST['variable_sale_price_dates_from'][ $i ] ) ? strtotime( sanitize_text_field( wp_unslash( $_POST['variable_sale_price_dates_from'][ $i ] ) ) ) : '';
+		$date_on_sale_to       = isset( $_POST['variable_sale_price_dates_to'][ $i ] ) ? strtotime( sanitize_text_field( wp_unslash( $_POST['variable_sale_price_dates_to'][ $i ] ) ) ) : '';
+		$sale_price_times_from = isset( $_POST['variable_sale_price_times_from'][ $i ] ) ? sanitize_text_field( wp_unslash( $_POST['variable_sale_price_times_from'][ $i ] ) ) : '00:00';
+		$sale_price_times_to   = isset( $_POST['variable_sale_price_times_to'][ $i ] ) ? sanitize_text_field( wp_unslash( $_POST['variable_sale_price_times_to'][ $i ] ) ) : '00:00';
 		$time_from             = woo_ctr_time( $sale_price_times_from );
 		$time_to               = woo_ctr_time( $sale_price_times_to );
 		if ( $date_on_sale_from ) {
 			$date_on_sale_from += $time_from;
 		} else {
-			$date_on_sale_from     = strtotime( gmdate( "Y-m-d" ) );
+			$date_on_sale_from     = strtotime( gmdate( 'Y-m-d' ) );
 			$sale_price_times_from = '00:00';
 		}
 		if ( $date_on_sale_to ) {
 			$date_on_sale_to += $time_to;
 		}
 		$expire = $date_on_sale_from - current_time( 'timestamp' );
-		if ( isset( $_POST['variable_sale_price'][ $i ] ) && $_POST['variable_sale_price'][ $i ] && $date_on_sale_from && $expire > 0 ) {
+		$variable_sale_price = isset( $_POST['variable_sale_price'][ $i ] ) ? sanitize_text_field( wp_unslash( $_POST['variable_sale_price'][ $i ] ) ) : '';
+		if ( $variable_sale_price && $date_on_sale_from && $expire > 0 ) {
 			set_transient( 'woo_sctr_update_variable_price_start_sale_' . $variation_id, $date_on_sale_from, $expire );
 		}
 		update_post_meta( $variation_id, '_sale_price_dates_from', ( $date_on_sale_from - $gmt_offset * 3600 ) > 0 ? ( $date_on_sale_from - $gmt_offset * 3600 ) : '' );
 		update_post_meta( $variation_id, '_sale_price_dates_to', ! empty( $date_on_sale_to ) && ( $date_on_sale_to - $gmt_offset * 3600 ) > 0 ? ( $date_on_sale_to - $gmt_offset * 3600 ) : '' );
-		update_post_meta( $variation_id, '_woo_ctr_select_countdown_timer', isset( $_POST['_woo_ctr_select_countdown_timer'] ) ? sanitize_text_field( $_POST['_woo_ctr_select_countdown_timer'][ $i ] ) : '' );
+		update_post_meta( $variation_id, '_woo_ctr_select_countdown_timer', isset( $_POST['_woo_ctr_select_countdown_timer'][ $i ] ) ? sanitize_text_field( wp_unslash( $_POST['_woo_ctr_select_countdown_timer'][ $i ] ) ) : '' );
 		update_post_meta( $variation_id, '_sale_price_times_from', $sale_price_times_from );
 		update_post_meta( $variation_id, '_sale_price_times_to', $sale_price_times_to );
-		update_post_meta( $variation_id, '_woo_ctr_enable_progress_bar', isset( $_POST['_woo_ctr_enable_progress_bar'][ $i ] ) ? sanitize_text_field( $_POST['_woo_ctr_enable_progress_bar'][ $i ] ) : '' );
-		update_post_meta( $variation_id, '_woo_ctr_progress_bar_goal', isset( $_POST['_woo_ctr_progress_bar_goal'][ $i ] ) ? sanitize_text_field( $_POST['_woo_ctr_progress_bar_goal'][ $i ] ) : '' );
-		update_post_meta( $variation_id, '_woo_ctr_progress_bar_initial', isset( $_POST['_woo_ctr_progress_bar_initial'][ $i ] ) ? sanitize_text_field( $_POST['_woo_ctr_progress_bar_initial'][ $i ] ) : '' );
+		update_post_meta( $variation_id, '_woo_ctr_enable_progress_bar', isset( $_POST['_woo_ctr_enable_progress_bar'][ $i ] ) ? sanitize_text_field( wp_unslash( $_POST['_woo_ctr_enable_progress_bar'][ $i ] ) ) : '' );
+		update_post_meta( $variation_id, '_woo_ctr_progress_bar_goal', isset( $_POST['_woo_ctr_progress_bar_goal'][ $i ] ) ? sanitize_text_field( wp_unslash( $_POST['_woo_ctr_progress_bar_goal'][ $i ] ) ) : '' );
+		update_post_meta( $variation_id, '_woo_ctr_progress_bar_initial', isset( $_POST['_woo_ctr_progress_bar_initial'][ $i ] ) ? sanitize_text_field( wp_unslash( $_POST['_woo_ctr_progress_bar_initial'][ $i ] ) ) : '' );
 	}
 
 }

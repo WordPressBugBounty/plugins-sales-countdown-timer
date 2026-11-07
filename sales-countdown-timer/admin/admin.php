@@ -9,6 +9,7 @@ Copyright 2018 villatheme.com. All rights reserved.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals -- Intentional SALES_COUNTDOWN_TIMER_ / woo_ctr_ / woo_sctr_ / sctv_ / VillaTheme_ prefixes.
 
 class SALES_COUNTDOWN_TIMER_Admin_Admin {
 	protected $settings;
@@ -48,9 +49,12 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 	}
 
 	public function custom_elementor_preview_styles() {
-		wp_enqueue_style( 'woo-sctr-shortcode-style', SALES_COUNTDOWN_TIMER_CSS . 'shortcode-style.css', array( 'jquery' ), SALES_COUNTDOWN_TIMER_VERSION, false );
+		$suffix = WP_DEBUG ? '' : '.min';
+		wp_enqueue_style( 'woo-sctr-shortcode-style', SALES_COUNTDOWN_TIMER_CSS . 'shortcode-style' . $suffix . '.css', array(), SALES_COUNTDOWN_TIMER_VERSION );
 		$elm_css = $this->settings->get_countdown_inline_style();
-		wp_add_inline_style( 'woo-sctr-shortcode-style', $elm_css );
+		if ( $elm_css ) {
+			wp_add_inline_style( 'woo-sctr-shortcode-style', $elm_css );
+		}
 	}
 
 	public function settings_checkout_countdown() {
@@ -697,36 +701,41 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 					$now               = current_time( 'timestamp', true );
 					$product_url       = '';
 					if ( false === $sale_products ) {
-						$products_args = array(
-							'post_type'      => 'product',
-							'status'         => 'publish',
-							'posts_per_page' => - 1,
-							'meta_query'     => array(// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-								'relation' => 'AND',
-								array(
-									'key'     => '_sale_price',
-									'value'   => '',
-									'compare' => '!=',
+						$paged = 1;
+						do {
+							$products_args = array(
+								'post_type'      => 'product',
+								'post_status'    => 'publish',
+								'posts_per_page' => 50,
+								'paged'          => $paged,
+								'fields'         => 'ids',
+								'meta_query'     => array(// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+									'relation' => 'AND',
+									array(
+										'key'     => '_sale_price',
+										'value'   => '',
+										'compare' => '!=',
+									),
+									array(
+										'key'     => '_sale_price_dates_to',
+										'value'   => $now,
+										'compare' => '>',
+									),
 								),
-								array(
-									'key'     => '_sale_price_dates_to',
-									'value'   => $now,
-									'compare' => '>',
-								)
-							),
-						);
-						$the_query     = new WP_Query( $products_args );
-						if ( $the_query->have_posts() ) {
-							while ( $the_query->have_posts() ) {
-								$the_query->the_post();
-								$product_id = get_the_ID();
-								update_post_meta( $product_id, '_woo_ctr_select_countdown_timer', $default_countdown );
-								if ( ! $product_url ) {
-									$product_url = get_permalink( $product_id );
+							);
+							$the_query     = new WP_Query( $products_args );
+							if ( $the_query->have_posts() ) {
+								foreach ( $the_query->posts as $product_id ) {
+									update_post_meta( $product_id, '_woo_ctr_select_countdown_timer', $default_countdown );
+									if ( ! $product_url ) {
+										$product_url = get_permalink( $product_id );
+									}
 								}
 							}
-						}
-						wp_reset_postdata();
+							$max_pages = (int) $the_query->max_num_pages;
+							wp_reset_postdata();
+							$paged ++;
+						} while ( $paged <= $max_pages );
 					} elseif ( is_array( $sale_products ) && count( $sale_products ) ) {
 						foreach ( $sale_products as $product_id ) {
 							update_post_meta( $product_id, '_woo_ctr_select_countdown_timer', $default_countdown );
@@ -897,7 +906,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
                                         <p>{countdown_timer}
                                             - <?php esc_html_e( 'The countdown timer that you set on tab design', 'sales-countdown-timer' ) ?></p>
                                         <p class="woo-sctr-warning-message-countdown-timer <?php if ( count( $text ) >= 2 ) {
-											esc_attr_e( 'woo-sctr-hidden-class' );
+											echo 'woo-sctr-hidden-class';
 										} ?>"><?php esc_html_e( 'The countdown timer will not show if message does not include {countdown_timer}', 'sales-countdown-timer' ) ?></p>
                                     </div>
                                     <div class="field">
@@ -1631,14 +1640,14 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 
                                         </div>
                                         <div class="field">
-                                            <p>{quantity_left} - <?php esc_html_e( 'Number of products left' ) ?></p>
-                                            <p>{quantity_sold} - <?php esc_html_e( 'Number of products sold' ) ?></p>
+                                            <p>{quantity_left} - <?php esc_html_e( 'Number of products left', 'sales-countdown-timer' ); ?></p>
+                                            <p>{quantity_sold} - <?php esc_html_e( 'Number of products sold', 'sales-countdown-timer' ); ?></p>
                                             <p>{percentage_left}
-                                                - <?php esc_html_e( 'Percentage of products left' ) ?></p>
+                                                - <?php esc_html_e( 'Percentage of products left', 'sales-countdown-timer' ); ?></p>
                                             <p>{percentage_sold}
-                                                - <?php esc_html_e( 'Percentage of products sold' ) ?></p>
+                                                - <?php esc_html_e( 'Percentage of products sold', 'sales-countdown-timer' ); ?></p>
                                             <p>{goal}
-                                                - <?php esc_html_e( 'The goal that you set on single product' ) ?></p>
+                                                - <?php esc_html_e( 'The goal that you set on single product', 'sales-countdown-timer' ); ?></p>
                                         </div>
                                         <div class="equal width fields">
                                             <div class="field">
@@ -1801,10 +1810,6 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 					<?php
 				}
 				?>
-                <!--                <p><input type="submit" name="submit" class="vi-ui primary button"-->
-                <!--                          value="-->
-				<?php //esc_html_e( 'Save', 'sales-countdown-timer' ); ?><!--"></p>-->
-
                 <p class="woo-sctr-button-save-container">
                     <span class="woo-sctr-save vi-ui primary button"><?php esc_html_e( 'Save', 'sales-countdown-timer' ); ?></span>
                 </p>
@@ -1822,101 +1827,102 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 			'status'  => 'failed',
 			'message' => '',
 		);
-		if ( isset( $_POST['woo_ctr_nonce_field'] ) && wp_verify_nonce( $_POST['woo_ctr_nonce_field'], 'woo_ctr_settings_page_save' ) ) {
-			$args = array(
-				'id'                                 => isset( $_POST['woo_ctr_id'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_id'] ) : array(),
-				'names'                              => isset( $_POST['woo_ctr_name'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_name'] ) : array(),
-				'message'                            => isset( $_POST['woo_ctr_message'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_message'] ) : array(),
-				'active'                             => isset( $_POST['woo_ctr_active'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_active'] ) : array(),
-				'enable_single_product'              => isset( $_POST['woo_ctr_enable_single_product'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_enable_single_product'] ) : array(),
-				'time_type'                          => 'fixed',
-				'count_style'                        => isset( $_POST['woo_ctr_count_style'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_count_style'] ) : array(),
-				'sale_from_date'                     => isset( $_POST['woo_ctr_sale_from_date'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_sale_from_date'] ) : array(),
-				'sale_to_date'                       => isset( $_POST['woo_ctr_sale_to_date'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_sale_to_date'] ) : array(),
-				'sale_from_time'                     => isset( $_POST['woo_ctr_sale_from_time'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_sale_from_time'] ) : array(),
-				'sale_to_time'                       => isset( $_POST['woo_ctr_sale_to_time'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_sale_to_time'] ) : array(),
-				'upcoming'                           => isset( $_POST['woo_ctr_upcoming'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_upcoming'] ) : array(),
-				'upcoming_message'                   => isset( $_POST['woo_ctr_upcoming_message'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_upcoming_message'] ) : array(),
-				'style'                              => isset( $_POST['woo_ctr_style'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_style'] ) : array(),
-				'position'                           => isset( $_POST['woo_ctr_position'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_position'] ) : array(),
-				'progress_bar'                       => isset( $_POST['woo_ctr_progress_bar'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_progress_bar'] ) : array(),
-				'progress_bar_position'              => isset( $_POST['woo_ctr_progress_bar_position'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_progress_bar_position'] ) : array(),
-				'progress_bar_message'               => isset( $_POST['woo_ctr_progress_bar_message'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_progress_bar_message'] ) : array(),
-				'progress_bar_order_status'          => isset( $_POST['woo_ctr_progress_bar_order_status'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_progress_bar_order_status'] ) : array(),
-				'progress_bar_type'                  => isset( $_POST['woo_ctr_progress_bar_type'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_progress_bar_type'] ) : array(),
-				'progress_bar_width'                 => isset( $_POST['woo_ctr_progress_bar_width'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_progress_bar_width'] ) : array(),
-				'progress_bar_height'                => isset( $_POST['woo_ctr_progress_bar_height'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_progress_bar_height'] ) : array(),
-				'progress_bar_bg_color'              => isset( $_POST['woo_ctr_progress_bar_bg_color'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_progress_bar_bg_color'] ) : array(),
-				'progress_bar_color'                 => isset( $_POST['woo_ctr_progress_bar_color'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_progress_bar_color'] ) : array(),
-				'progress_bar_border_radius'         => isset( $_POST['woo_ctr_progress_bar_border_radius'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_progress_bar_border_radius'] ) : array(),
-				'progress_bar_style'                 => isset( $_POST['woo_ctr_progress_bar_style'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_progress_bar_style'] ) : array(),
-				'countdown_timer_hide_zero'          => isset( $_POST['woo_ctr_countdown_timer_hide_zero'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_countdown_timer_hide_zero'] ) : array(),
-				'countdown_timer_color'              => isset( $_POST['woo_ctr_countdown_timer_color'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_countdown_timer_color'] ) : array(),
-				'countdown_timer_bg_color'           => isset( $_POST['woo_ctr_countdown_timer_bg_color'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_countdown_timer_bg_color'] ) : array(),
-				'countdown_timer_border_radius'      => isset( $_POST['woo_ctr_countdown_timer_border_radius'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_countdown_timer_border_radius'] ) : array(),
-				'countdown_timer_border_color'       => isset( $_POST['woo_ctr_countdown_timer_border_color'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_countdown_timer_border_color'] ) : array(),
-				'countdown_timer_item_border_radius' => isset( $_POST['woo_ctr_countdown_timer_item_border_radius'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_countdown_timer_item_border_radius'] ) : array(),
-				'countdown_timer_item_border_color'  => isset( $_POST['woo_ctr_countdown_timer_item_border_color'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_countdown_timer_item_border_color'] ) : array(),
-				'countdown_timer_item_height'        => isset( $_POST['woo_ctr_countdown_timer_item_height'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_countdown_timer_item_height'] ) : array(),
-				'countdown_timer_item_width'         => isset( $_POST['woo_ctr_countdown_timer_item_width'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_countdown_timer_item_width'] ) : array(),
-				'countdown_timer_padding'            => isset( $_POST['woo_ctr_countdown_timer_padding'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_countdown_timer_padding'] ) : array(),
-				'datetime_unit_color'                => isset( $_POST['woo_ctr_datetime_unit_color'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_datetime_unit_color'] ) : array(),
-				'datetime_unit_bg_color'             => isset( $_POST['woo_ctr_datetime_unit_bg_color'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_datetime_unit_bg_color'] ) : array(),
-				'datetime_unit_font_size'            => isset( $_POST['woo_ctr_datetime_unit_font_size'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_datetime_unit_font_size'] ) : array(),
-				'datetime_value_color'               => isset( $_POST['woo_ctr_datetime_value_color'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_datetime_value_color'] ) : array(),
-				'datetime_value_bg_color'            => isset( $_POST['woo_ctr_datetime_value_bg_color'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_datetime_value_bg_color'] ) : array(),
-				'datetime_value_font_size'           => isset( $_POST['woo_ctr_datetime_value_font_size'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_datetime_value_font_size'] ) : array(),
-				'time_separator'                     => isset( $_POST['woo_ctr_time_separator'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_time_separator'] ) : array(),
-				'display_type'                       => isset( $_POST['woo_ctr_display_type'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_display_type'] ) : array(),
-				'shop_page'                          => isset( $_POST['woo_ctr_shop_page'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_shop_page'] ) : array(),
-				'category_page'                      => isset( $_POST['woo_ctr_category_page'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_category_page'] ) : array(),
-				'archive_page_position'              => isset( $_POST['woo_ctr_archive_page_position'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_archive_page_position'] ) : array(),
-				'size_on_archive_page'               => isset( $_POST['woo_ctr_size_on_archive_page'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_size_on_archive_page'] ) : array(),
-				'datetime_unit_position'             => isset( $_POST['woo_ctr_datetime_unit_position'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_datetime_unit_position'] ) : array(),
-				'animation_style'                    => isset( $_POST['woo_ctr_animation_style'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_animation_style'] ) : array(),
-				'circle_smooth_animation'            => isset( $_POST['woo_ctr_circle_smooth_animation'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_circle_smooth_animation'] ) : array(),
-				'stick_to_top'                       => isset( $_POST['woo_ctr_stick_to_top'] ) ? array_map( 'sanitize_text_field', $_POST['woo_ctr_stick_to_top'] ) : array(),
-			);
+		if ( ! current_user_can( 'manage_options' ) ) {
+			$response['message'] = esc_html__( 'You do not have permission to save settings.', 'sales-countdown-timer' );
+			wp_send_json( $response );
+		}
+		check_ajax_referer( 'woo_ctr_settings_page_save', 'woo_ctr_nonce_field' );
 
-			if ( ! count( $args['names'] ) ) {
-				$response['message'] = esc_html__( 'Can not remove all Countdown timer settings.', 'sales-countdown-timer' );
+		$map = array(
+			'id'                                 => 'woo_ctr_id',
+			'names'                              => 'woo_ctr_name',
+			'message'                            => 'woo_ctr_message',
+			'active'                             => 'woo_ctr_active',
+			'enable_single_product'              => 'woo_ctr_enable_single_product',
+			'count_style'                        => 'woo_ctr_count_style',
+			'sale_from_date'                     => 'woo_ctr_sale_from_date',
+			'sale_to_date'                       => 'woo_ctr_sale_to_date',
+			'sale_from_time'                     => 'woo_ctr_sale_from_time',
+			'sale_to_time'                       => 'woo_ctr_sale_to_time',
+			'upcoming'                           => 'woo_ctr_upcoming',
+			'upcoming_message'                   => 'woo_ctr_upcoming_message',
+			'style'                              => 'woo_ctr_style',
+			'position'                           => 'woo_ctr_position',
+			'progress_bar'                       => 'woo_ctr_progress_bar',
+			'progress_bar_position'              => 'woo_ctr_progress_bar_position',
+			'progress_bar_message'               => 'woo_ctr_progress_bar_message',
+			'progress_bar_order_status'          => 'woo_ctr_progress_bar_order_status',
+			'progress_bar_type'                  => 'woo_ctr_progress_bar_type',
+			'progress_bar_width'                 => 'woo_ctr_progress_bar_width',
+			'progress_bar_height'                => 'woo_ctr_progress_bar_height',
+			'progress_bar_bg_color'              => 'woo_ctr_progress_bar_bg_color',
+			'progress_bar_color'                 => 'woo_ctr_progress_bar_color',
+			'progress_bar_border_radius'         => 'woo_ctr_progress_bar_border_radius',
+			'progress_bar_style'                 => 'woo_ctr_progress_bar_style',
+			'countdown_timer_hide_zero'          => 'woo_ctr_countdown_timer_hide_zero',
+			'countdown_timer_color'              => 'woo_ctr_countdown_timer_color',
+			'countdown_timer_bg_color'           => 'woo_ctr_countdown_timer_bg_color',
+			'countdown_timer_border_radius'      => 'woo_ctr_countdown_timer_border_radius',
+			'countdown_timer_border_color'       => 'woo_ctr_countdown_timer_border_color',
+			'countdown_timer_item_border_radius' => 'woo_ctr_countdown_timer_item_border_radius',
+			'countdown_timer_item_border_color'  => 'woo_ctr_countdown_timer_item_border_color',
+			'countdown_timer_item_height'        => 'woo_ctr_countdown_timer_item_height',
+			'countdown_timer_item_width'         => 'woo_ctr_countdown_timer_item_width',
+			'countdown_timer_padding'            => 'woo_ctr_countdown_timer_padding',
+			'datetime_unit_color'                => 'woo_ctr_datetime_unit_color',
+			'datetime_unit_bg_color'             => 'woo_ctr_datetime_unit_bg_color',
+			'datetime_unit_font_size'            => 'woo_ctr_datetime_unit_font_size',
+			'datetime_value_color'               => 'woo_ctr_datetime_value_color',
+			'datetime_value_bg_color'            => 'woo_ctr_datetime_value_bg_color',
+			'datetime_value_font_size'           => 'woo_ctr_datetime_value_font_size',
+			'time_separator'                     => 'woo_ctr_time_separator',
+			'display_type'                       => 'woo_ctr_display_type',
+			'shop_page'                          => 'woo_ctr_shop_page',
+			'category_page'                      => 'woo_ctr_category_page',
+			'archive_page_position'              => 'woo_ctr_archive_page_position',
+			'size_on_archive_page'               => 'woo_ctr_size_on_archive_page',
+			'datetime_unit_position'             => 'woo_ctr_datetime_unit_position',
+			'animation_style'                    => 'woo_ctr_animation_style',
+			'circle_smooth_animation'            => 'woo_ctr_circle_smooth_animation',
+			'stick_to_top'                       => 'woo_ctr_stick_to_top',
+		);
+
+		$args = array(
+			'time_type' => 'fixed',
+		);
+		foreach ( $map as $dest => $src ) {
+			$args[ $dest ] = isset( $_POST[ $src ] ) ? array_map( 'sanitize_text_field', (array) wp_unslash( $_POST[ $src ] ) ) : array();
+		}
+
+		if ( ! count( $args['names'] ) ) {
+			$response['message'] = esc_html__( 'Can not remove all Countdown timer settings.', 'sales-countdown-timer' );
+			wp_send_json( $response );
+		} else {
+			if ( count( $args['names'] ) != count( array_unique( $args['names'] ) ) ) {
+				$response['message'] = esc_html__( 'Names are unique.', 'sales-countdown-timer' );
 				wp_send_json( $response );
-				die;
-			} else {
-				if ( count( $args['names'] ) != count( array_unique( $args['names'] ) ) ) {
-					$response['message'] = esc_html__( 'Names are unique.', 'sales-countdown-timer' );
+			}
+			foreach ( $args['names'] as $name ) {
+				if ( ! $name ) {
+					$response['message'] = esc_html__( 'Names can not be empty.', 'sales-countdown-timer' );
 					wp_send_json( $response );
-					die;
-				}
-				foreach ( $args['names'] as $key => $name ) {
-					if ( ! $name ) {
-						$response['message'] = esc_html__( 'Names can not be empty.', 'sales-countdown-timer' );
-						wp_send_json( $response );
-						die;
-					}
 				}
 			}
-			update_option( 'sales_countdown_timer_params', $args );
-			$response['status']  = 'successful';
-			$response['message'] = esc_html__( 'Data saved.', 'sales-countdown-timer' );
-			wp_send_json( $response );
-			die;
 		}
+		update_option( 'sales_countdown_timer_params', $args );
+		$response['status']  = 'successful';
+		$response['message'] = esc_html__( 'Data saved.', 'sales-countdown-timer' );
+		wp_send_json( $response );
 	}
-
 	/**
 	 * Init Script in Admin
 	 */
 	public function admin_enqueue_scripts() {
 		$suffix = WP_DEBUG ? '' : '.min';
-		if ( isset( $_REQUEST['_woo_ctr_admin_nonce'] ) && ! wp_verify_nonce( wc_clean( wp_unslash( $_REQUEST['_woo_ctr_admin_nonce'] ) ), 'woo_ctr_admin_nonce' ) ) {
-			return;
-		}
-		$page = isset( $_REQUEST['page'] ) ? sanitize_text_field( $_REQUEST['page'] ) : '';
+		$page   = isset( $_REQUEST['page'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Admin screen query arg used only to enqueue assets.
 		if ( $page === 'sales-countdown-timer-checkout' ) {
 			global $wp_scripts;
 			$scripts = $wp_scripts->registered;
-			//			print_r($scripts);
 			foreach ( $scripts as $k => $script ) {
 				preg_match( '/^\/wp-/i', $script->src, $result );
 				if ( count( array_filter( $result ) ) ) {
@@ -2014,87 +2020,87 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 
 				for ( $i = 0; $i < count( $id ); $i ++ ) {
 					if ( $this->settings->get_datetime_value_bg_color()[ $i ] ) {
-						$css .= '.woo-sctr-accordion-wrap[data-accordion_id="' . $i . '"] .woo-sctr-shortcode-countdown-style-4 .woo-sctr-shortcode-countdown-1 .woo-sctr-progress-circle:after{' . esc_attr__( 'background:' ) . $this->settings->get_datetime_value_bg_color()[ $i ] . ';}';
+						$css .= '.woo-sctr-accordion-wrap[data-accordion_id="' . $i . '"] .woo-sctr-shortcode-countdown-style-4 .woo-sctr-shortcode-countdown-1 .woo-sctr-progress-circle:after{background:' . esc_attr( $this->settings->get_datetime_value_bg_color()[ $i ] ) . ';}';
 					}
 					if ( $this->settings->get_countdown_timer_item_border_color()[ $i ] ) {
-						$css .= '.woo-sctr-accordion-wrap-' . $i . ' .woo-sctr-shortcode-countdown-style-4 .woo-sctr-shortcode-countdown-1 .woo-sctr-progress-circle .woo-sctr-value-bar{' . esc_attr__( 'border-color: ' ) . $this->settings->get_countdown_timer_item_border_color()[ $i ] . ';}';
-						$css .= '.woo-sctr-accordion-wrap-' . $i . ' .woo-sctr-shortcode-countdown-style-4 .woo-sctr-shortcode-countdown-1 .woo-sctr-progress-circle .woo-sctr-first50-bar{' . esc_attr__( 'background-color: ' ) . $this->settings->get_countdown_timer_item_border_color()[ $i ] . ';}';
+						$css .= '.woo-sctr-accordion-wrap-' . $i . ' .woo-sctr-shortcode-countdown-style-4 .woo-sctr-shortcode-countdown-1 .woo-sctr-progress-circle .woo-sctr-value-bar{border-color: ' . esc_attr( $this->settings->get_countdown_timer_item_border_color()[ $i ] ) . ';}';
+						$css .= '.woo-sctr-accordion-wrap-' . $i . ' .woo-sctr-shortcode-countdown-style-4 .woo-sctr-shortcode-countdown-1 .woo-sctr-progress-circle .woo-sctr-first50-bar{background-color: ' . esc_attr( $this->settings->get_countdown_timer_item_border_color()[ $i ] ) . ';}';
 					}
 					if ( $this->settings->get_datetime_value_font_size()[ $i ] ) {
-						$css .= '.woo-sctr-accordion-wrap-' . $i . ' .woo-sctr-shortcode-countdown-style-4 .woo-sctr-shortcode-countdown-1 .woo-sctr-progress-circle{' . esc_attr__( 'font-size:' ) . $this->settings->get_datetime_value_font_size()[ $i ] . 'px;}';
+						$css .= '.woo-sctr-accordion-wrap-' . $i . ' .woo-sctr-shortcode-countdown-style-4 .woo-sctr-shortcode-countdown-1 .woo-sctr-progress-circle{font-size:' . esc_attr( $this->settings->get_datetime_value_font_size()[ $i ] ) . 'px;}';
 					}
 
 					$css .= '.woo-sctr-accordion-wrap-' . $i . ' .woo-sctr-shortcode-wrap-wrap:not(.woo-sctr-shortcode-wrap-wrap-inline) .woo-sctr-shortcode-countdown-1{';
 					if ( $this->settings->get_countdown_timer_color()[ $i ] ) {
-						$css .= esc_attr__( 'color:' ) . $this->settings->get_countdown_timer_color()[ $i ] . ';';
+						$css .= 'color:' . esc_attr( $this->settings->get_countdown_timer_color()[ $i ] ) . ';';
 					}
 					if ( $this->settings->get_countdown_timer_bg_color()[ $i ] ) {
-						$css .= esc_html__( 'background:' ) . $this->settings->get_countdown_timer_bg_color()[ $i ] . ';';
+						$css .= 'background:' . esc_attr( $this->settings->get_countdown_timer_bg_color()[ $i ] ) . ';';
 					}
 					if ( $this->settings->get_countdown_timer_padding()[ $i ] ) {
-						$css .= esc_html__( 'padding:' ) . $this->settings->get_countdown_timer_padding()[ $i ] . 'px;';
+						$css .= 'padding:' . esc_attr( $this->settings->get_countdown_timer_padding()[ $i ] ) . 'px;';
 					}
 					if ( $this->settings->get_countdown_timer_border_radius()[ $i ] ) {
-						$css .= esc_html__( 'border-radius:' ) . $this->settings->get_countdown_timer_border_radius()[ $i ] . 'px;';
+						$css .= 'border-radius:' . esc_attr( $this->settings->get_countdown_timer_border_radius()[ $i ] ) . 'px;';
 					}
 					if ( $this->settings->get_countdown_timer_border_color()[ $i ] ) {
-						$css .= esc_html__( 'border: 1px solid ' ) . $this->settings->get_countdown_timer_border_color()[ $i ] . ';';
+						$css .= 'border: 1px solid ' . esc_attr( $this->settings->get_countdown_timer_border_color()[ $i ] ) . ';';
 					}
 					$css .= '}';
 
 					$css .= '.woo-sctr-accordion-wrap-' . $i . ' .woo-sctr-shortcode-wrap-wrap.woo-sctr-shortcode-wrap-wrap-inline{';
 					if ( $this->settings->get_countdown_timer_color()[ $i ] ) {
-						$css .= esc_attr__( 'color:' ) . $this->settings->get_countdown_timer_color()[ $i ] . ';';
+						$css .= 'color:' . esc_attr( $this->settings->get_countdown_timer_color()[ $i ] ) . ';';
 					}
 					if ( $this->settings->get_countdown_timer_bg_color()[ $i ] ) {
-						$css .= esc_html__( 'background:' ) . $this->settings->get_countdown_timer_bg_color()[ $i ] . ';';
+						$css .= 'background:' . esc_attr( $this->settings->get_countdown_timer_bg_color()[ $i ] ) . ';';
 					}
 					if ( $this->settings->get_countdown_timer_padding()[ $i ] ) {
-						$css .= esc_html__( 'padding:' ) . $this->settings->get_countdown_timer_padding()[ $i ] . 'px;';
+						$css .= 'padding:' . esc_attr( $this->settings->get_countdown_timer_padding()[ $i ] ) . 'px;';
 					}
 					if ( $this->settings->get_countdown_timer_border_radius()[ $i ] ) {
-						$css .= esc_html__( 'border-radius:' ) . $this->settings->get_countdown_timer_border_radius()[ $i ] . 'px;';
+						$css .= 'border-radius:' . esc_attr( $this->settings->get_countdown_timer_border_radius()[ $i ] ) . 'px;';
 					}
 					if ( $this->settings->get_countdown_timer_border_color()[ $i ] ) {
-						$css .= esc_html__( 'border: 1px solid ' ) . $this->settings->get_countdown_timer_border_color()[ $i ] . ';';
+						$css .= 'border: 1px solid ' . esc_attr( $this->settings->get_countdown_timer_border_color()[ $i ] ) . ';';
 					}
 					$css .= '}';
 
 					$css .= '.woo-sctr-accordion-wrap-' . $i . ' .woo-sctr-shortcode-wrap-wrap .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-value{';
 					if ( $this->settings->get_datetime_value_color()[ $i ] ) {
-						$css .= esc_attr__( 'color:' ) . $this->settings->get_datetime_value_color()[ $i ] . ';';
+						$css .= 'color:' . esc_attr( $this->settings->get_datetime_value_color()[ $i ] ) . ';';
 					}
 					if ( $this->settings->get_datetime_value_bg_color()[ $i ] ) {
-						$css .= esc_attr__( 'background:' ) . $this->settings->get_datetime_value_bg_color()[ $i ] . ';';
+						$css .= 'background:' . esc_attr( $this->settings->get_datetime_value_bg_color()[ $i ] ) . ';';
 					}
 					if ( $this->settings->get_datetime_value_font_size()[ $i ] ) {
-						$css .= esc_attr__( 'font-size:' ) . $this->settings->get_datetime_value_font_size()[ $i ] . 'px;';
+						$css .= 'font-size:' . esc_attr( $this->settings->get_datetime_value_font_size()[ $i ] ) . 'px;';
 					}
 					$css .= '}';
 					$css .= '.woo-sctr-accordion-wrap-' . $i . ' .woo-sctr-shortcode-wrap-wrap .woo-sctr-shortcode-countdown-1 .woo-sctr-shortcode-countdown-text{';
 					if ( $this->settings->get_datetime_unit_color()[ $i ] ) {
-						$css .= esc_attr__( 'color:' ) . $this->settings->get_datetime_unit_color()[ $i ] . ';';
+						$css .= 'color:' . esc_attr( $this->settings->get_datetime_unit_color()[ $i ] ) . ';';
 					}
 					if ( $this->settings->get_datetime_unit_bg_color()[ $i ] ) {
-						$css .= esc_attr__( 'background:' ) . $this->settings->get_datetime_unit_bg_color()[ $i ] . ';';
+						$css .= 'background:' . esc_attr( $this->settings->get_datetime_unit_bg_color()[ $i ] ) . ';';
 					}
 					if ( $this->settings->get_datetime_unit_font_size()[ $i ] ) {
-						$css .= esc_attr__( 'font-size:' ) . $this->settings->get_datetime_unit_font_size()[ $i ] . 'px;';
+						$css .= 'font-size:' . esc_attr( $this->settings->get_datetime_unit_font_size()[ $i ] ) . 'px;';
 					}
 					$css .= '}';
 
 					$css1 = '';
 					if ( $this->settings->get_countdown_timer_item_height()[ $i ] ) {
-						$css1 .= esc_html__( 'height:' ) . $this->settings->get_countdown_timer_item_height()[ $i ] . 'px;';
+						$css1 .= 'height:' . esc_attr( $this->settings->get_countdown_timer_item_height()[ $i ] ) . 'px;';
 					}
 					if ( $this->settings->get_countdown_timer_item_width()[ $i ] ) {
-						$css1 .= esc_html__( 'width:' ) . $this->settings->get_countdown_timer_item_width()[ $i ] . 'px;';
+						$css1 .= 'width:' . esc_attr( $this->settings->get_countdown_timer_item_width()[ $i ] ) . 'px;';
 					}
 					if ( $this->settings->get_countdown_timer_item_border_radius()[ $i ] ) {
-						$css1 .= esc_html__( 'border-radius:' ) . $this->settings->get_countdown_timer_item_border_radius()[ $i ] . 'px;';
+						$css1 .= 'border-radius:' . esc_attr( $this->settings->get_countdown_timer_item_border_radius()[ $i ] ) . 'px;';
 					}
 					if ( $this->settings->get_countdown_timer_item_border_color()[ $i ] ) {
-						$css1 .= esc_html__( 'border:1px solid ' ) . $this->settings->get_countdown_timer_item_border_color()[ $i ] . ';';
+						$css1 .= 'border:1px solid ' . esc_attr( $this->settings->get_countdown_timer_item_border_color()[ $i ] ) . ';';
 					}
 					if ( $css1 ) {
 						$css .= '.woo-sctr-accordion-wrap-' . $i . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-1 .woo-sctr-shortcode-countdown-unit,.woo-sctr-accordion-wrap-' . $i . ' .woo-sctr-shortcode-countdown-wrap.woo-sctr-shortcode-countdown-style-2 .woo-sctr-shortcode-countdown-value{' . $css1 . '}';
@@ -2122,19 +2128,7 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 		return $links;
 	}
 
-	/**
-	 * load Language translate
-	 */
-	public function load_plugin_textdomain() {
-		$locale = apply_filters( 'plugin_locale', get_locale(), 'sales-countdown-timer' );
-		// Global + Frontend Locale
-		load_textdomain( 'sales-countdown-timer', SALES_COUNTDOWN_TIMER_LANGUAGES . "sales-countdown-timer-$locale.mo" );
-		load_plugin_textdomain( 'sales-countdown-timer', false, SALES_COUNTDOWN_TIMER_LANGUAGES );
-	}
-
 	public function init() {
-		load_plugin_textdomain( 'sales-countdown-timer' );
-		$this->load_plugin_textdomain();
 		if ( class_exists( 'VillaTheme_Support' ) ) {
 			new VillaTheme_Support(
 				array(
@@ -2153,5 +2147,3 @@ class SALES_COUNTDOWN_TIMER_Admin_Admin {
 		}
 	}
 }
-
-?>

@@ -3,7 +3,7 @@
  * Plugin Name: Countix Sales Countdown Timer
  * Plugin URI: https://villatheme.com/extensions/sales-countdown-timer/
  * Description: Create a sense of urgency with a countdown to the beginning or end of sales, store launch or other events for higher conversions.
- * Version: 1.1.12
+ * Version: 1.1.13
  * Author: VillaTheme
  * Author URI: https://villatheme.com
  * License: GPL v2 or later
@@ -14,24 +14,25 @@
  * Requires at least: 5.2
  * Tested up to: 7.1
  * WC requires at least: 7.0
- * WC tested up to: 11.0
+ * WC tested up to: 11.2
  * Requires PHP: 7.4
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-define( 'SALES_COUNTDOWN_TIMER_VERSION', '1.1.12' );
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals -- Intentional SALES_COUNTDOWN_TIMER_ / woo_ctr_ / woo_sctr_ / sctv_ / VillaTheme_ prefixes.
+
+define( 'SALES_COUNTDOWN_TIMER_VERSION', '1.1.13' );
 
 /**
  * Class SALES_COUNTDOWN_TIMER
  */
 class SALES_COUNTDOWN_TIMER {
 	public function __construct() {
-//		register_activation_hook( __FILE__, array( $this, 'install' ) );
-//		register_deactivation_hook( __FILE__, array( $this, 'uninstall' ) );
 		add_action( 'plugins_loaded', array( $this, 'init' ) );
 
-		//Compatible with High-Performance order storage (COT)
+		// Compatible with High-Performance order storage (COT).
 		add_action( 'before_woocommerce_init', array( $this, 'before_woocommerce_init' ) );
 	}
 
@@ -46,48 +47,32 @@ class SALES_COUNTDOWN_TIMER {
 			return;
 		}
 
+		$plugin_dir = plugin_dir_path( __FILE__ );
+
 		if ( ! class_exists( 'VillaTheme_Require_Environment' ) ) {
-			require_once WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . "sales-countdown-timer" . DIRECTORY_SEPARATOR . "includes" . DIRECTORY_SEPARATOR . "support.php";
+			require_once $plugin_dir . 'includes/support.php';
 		}
 
-		$environment = new VillaTheme_Require_Environment( [
-				'plugin_name'     => 'Countix Sales Countdown Timer',
-				'php_version'     => '7.4',
-				'wp_version'      => '5.2',
-			]
+		$environment = new VillaTheme_Require_Environment(
+			array(
+				'plugin_name' => 'Countix Sales Countdown Timer',
+				'php_version' => '7.4',
+				'wp_version'  => '5.2',
+			)
 		);
 
 		if ( $environment->has_error() ) {
 			return;
 		}
 
-		$init_file = WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . "sales-countdown-timer" . DIRECTORY_SEPARATOR . "includes" . DIRECTORY_SEPARATOR . "define.php";
-		require_once $init_file;
+		require_once $plugin_dir . 'includes/define.php';
 	}
 
 	public function before_woocommerce_init() {
 		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
 			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
-//			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
 		}
-	}
-
-	/**
-	 * When active plugin Function will be call
-	 */
-	public function install() {
-		global $wp_version;
-		if ( version_compare( $wp_version, "5.2", "<" ) ) {
-			deactivate_plugins( basename( __FILE__ ) ); // Deactivate our plugin
-			wp_die( "This plugin requires WordPress version 5.0 or higher." );
-		}
-	}
-
-	/**
-	 * When deactive function will be call
-	 */
-	public function uninstall() {
-
 	}
 }
 

@@ -1,5 +1,14 @@
 *** Countix Sales Countdown Timer Changelog ***
 
+2026.11.07 - version 1.1.13
+- Fixed: Stop unrestricted sale/price meta writes on storefront page views (gated mismatch sync)
+- Fixed: Sanitize countdown CSS profile ids and colors
+- Fixed: Cap demo product init query (no posts_per_page=-1)
+- Fixed: Null-safe progress bar when product is missing
+- Updated: Scope countdown CSS to pages that enqueue the timer (no full CSS dump every request)
+- Updated: Shortcode attributes without extract()
+- Updated: Compatible WooCommerce 11.2
+
 2026.08.17 - version 1.1.12
 - Updated: Compatible WooCommerce 11.0
 

@@ -5,7 +5,7 @@ Tags: checkout countdown for woocommerce, product time countdown for woocommerce
 Requires at least: 5.2
 Tested up to: 7.1
 WC requires at least: 7.0
-WC tested up to: 11.0
+WC tested up to: 11.2
 Requires PHP: 7.4
 Stable tag: trunk
 License: GPL v2 or later
@@ -252,6 +252,15 @@ All features from the free version.
 3. Sale countdown timer on single product page
 
 == Changelog ==
+
+2026.11.07 - version 1.1.13
+- Fixed: Stop unrestricted sale/price meta writes on storefront page views (gated mismatch sync)
+- Fixed: Sanitize countdown CSS profile ids and colors
+- Fixed: Cap demo product init query (no posts_per_page=-1)
+- Fixed: Null-safe progress bar when product is missing
+- Updated: Scope countdown CSS to pages that enqueue the timer (no full CSS dump every request)
+- Updated: Shortcode attributes without extract()
+- Updated: Compatible WooCommerce 11.2
 
 2026.08.17 - version 1.1.12
 - Updated: Compatible WooCommerce 11.0

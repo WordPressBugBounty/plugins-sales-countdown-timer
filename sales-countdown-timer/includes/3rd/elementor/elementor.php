@@ -1,7 +1,8 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-} // Exit if accessed directly
+}
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals -- Intentional SALES_COUNTDOWN_TIMER_ prefixes and Elementor hooks.
 if ( ! is_plugin_active( 'elementor/elementor.php' ) ) {
 	return;
 }
